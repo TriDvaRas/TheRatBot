@@ -1,0 +1,261 @@
+
+  [
+    {
+      "id": "1",
+      "Name": "American",
+      "picPath": "Imgs/Civs/1.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "2",
+      "Name": "Arabian",
+      "picPath": "Imgs/Civs/2.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "3",
+      "Name": "Assyrian",
+      "picPath": "Imgs/Civs/3.png",
+      "DLC": "BNW"
+    },
+    {
+      "id": "4",
+      "Name": "Austrian",
+      "picPath": "Imgs/Civs/4.png",
+      "DLC": "G&K"
+    },
+    {
+      "id": "5",
+      "Name": "Aztec",
+      "picPath": "Imgs/Civs/5.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "6",
+      "Name": "Babylonian",
+      "picPath": "Imgs/Civs/6.png",
+      "DLC": "Babylon"
+    },
+    {
+      "id": "7",
+      "Name": "Brazilian",
+      "picPath": "Imgs/Civs/7.png",
+      "DLC": "BNW"
+    },
+    {
+      "id": "8",
+      "Name": "Byzantine",
+      "picPath": "Imgs/Civs/8.png",
+      "DLC": "G&K"
+    },
+    {
+      "id": "9",
+      "Name": "Carthaginian",
+      "picPath": "Imgs/Civs/9.png",
+      "DLC": "G&K"
+    },
+    {
+      "id": "10",
+      "Name": "Celtic",
+      "picPath": "Imgs/Civs/10.png",
+      "DLC": "G&K"
+    },
+    {
+      "id": "11",
+      "Name": "Chinese",
+      "picPath": "Imgs/Civs/11.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "12",
+      "Name": "Danish",
+      "picPath": "Imgs/Civs/12.png",
+      "DLC": "Denmark"
+    },
+    {
+      "id": "13",
+      "Name": "Dutch",
+      "picPath": "Imgs/Civs/13.png",
+      "DLC": "G&K"
+    },
+    {
+      "id": "14",
+      "Name": "Egyptian",
+      "picPath": "Imgs/Civs/14.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "15",
+      "Name": "English",
+      "picPath": "Imgs/Civs/15.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "16",
+      "Name": "Ethiopian",
+      "picPath": "Imgs/Civs/16.png",
+      "DLC": "G&K"
+    },
+    {
+      "id": "17",
+      "Name": "French",
+      "picPath": "Imgs/Civs/17.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "18",
+      "Name": "German",
+      "picPath": "Imgs/Civs/18.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "19",
+      "Name": "Greek",
+      "picPath": "Imgs/Civs/19.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "20",
+      "Name": "Hunnic",
+      "picPath": "Imgs/Civs/20.png",
+      "DLC": "G&K"
+    },
+    {
+      "id": "21",
+      "Name": "Incan",
+      "picPath": "Imgs/Civs/21.png",
+      "DLC": "Spain and the Inca"
+    },
+    {
+      "id": "22",
+      "Name": "Indian",
+      "picPath": "Imgs/Civs/22.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "23",
+      "Name": "Indonesian",
+      "picPath": "Imgs/Civs/23.png",
+      "DLC": "BNW"
+    },
+    {
+      "id": "24",
+      "Name": "Iroquois",
+      "picPath": "Imgs/Civs/24.png",
+      "DLC": "BNW"
+    },
+    {
+      "id": "25",
+      "Name": "Japanese",
+      "picPath": "Imgs/Civs/25.png",
+      "DLC": "G&K"
+    },
+    {
+      "id": "26",
+      "Name": "Korean",
+      "picPath": "Imgs/Civs/26.png",
+      "DLC": "Korea"
+    },
+    {
+      "id": "27",
+      "Name": "Mayan",
+      "picPath": "Imgs/Civs/27.png",
+      "DLC": "G&K"
+    },
+    {
+      "id": "28",
+      "Name": "Mongolian",
+      "picPath": "Imgs/Civs/28.png",
+      "DLC": "Mongolia"
+    },
+    {
+      "id": "29",
+      "Name": "Moroccan",
+      "picPath": "Imgs/Civs/29.png",
+      "DLC": "BNW"
+    },
+    {
+      "id": "30",
+      "Name": "Ottoman",
+      "picPath": "Imgs/Civs/30.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "31",
+      "Name": "Persian",
+      "picPath": "Imgs/Civs/31.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "32",
+      "Name": "Polish",
+      "picPath": "Imgs/Civs/32.png",
+      "DLC": "BNW"
+    },
+    {
+      "id": "33",
+      "Name": "Polynesian",
+      "picPath": "Imgs/Civs/33.png",
+      "DLC": "Polynesia"
+    },
+    {
+      "id": "34",
+      "Name": "Portuguese",
+      "picPath": "Imgs/Civs/34.png",
+      "DLC": "BNW"
+    },
+    {
+      "id": "35",
+      "Name": "Roman",
+      "picPath": "Imgs/Civs/35.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "36",
+      "Name": "Russian",
+      "picPath": "Imgs/Civs/36.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "37",
+      "Name": "Shoshone",
+      "picPath": "Imgs/Civs/37.png",
+      "DLC": "BNW"
+    },
+    {
+      "id": "38",
+      "Name": "Siamese",
+      "picPath": "Imgs/Civs/38.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "39",
+      "Name": "Songhai",
+      "picPath": "Imgs/Civs/39.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "40",
+      "Name": "Spanish",
+      "picPath": "Imgs/Civs/40.png",
+      "DLC": "Spain and the Inca"
+    },
+    {
+      "id": "41",
+      "Name": "Swedish",
+      "picPath": "Imgs/Civs/41.png",
+      "DLC": "Vanilla"
+    },
+    {
+      "id": "42",
+      "Name": "Venetian",
+      "picPath": "Imgs/Civs/42.png",
+      "DLC": "BNW"
+    },
+    {
+      "id": "43",
+      "Name": "Zulu",
+      "picPath": "Imgs/Civs/43.png",
+      "DLC": "BNW"
+    }
+  ]

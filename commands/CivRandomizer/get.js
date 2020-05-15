@@ -39,7 +39,6 @@ module.exports = {
             mergeImg(images)
                 .then((img) => {
                     img.write(`./commands/CivRandomizer/Imgs/Players/${message.author.tag}.png`, () => {
-                        console.log('done');
                         message.reply(txt.slice(0, -1), {
                             file: `./commands/CivRandomizer/Imgs/Players/${message.author.tag}.png`
                         });

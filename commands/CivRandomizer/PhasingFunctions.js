@@ -47,7 +47,6 @@ function GetCivLine(CurrState, message, Player, PlayerId) {
             });
 
         });
-        console.log(CurrState.repeat == true);
     if (CurrState.repeat == true)
         for (let i = CurrState.picked.length - 1; i >= 0; i--) {
             CurrState.Civs.push(CurrState.picked.splice(i, 1)[0]);

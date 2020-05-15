@@ -6,7 +6,7 @@ module.exports = {
     name: 'opban',
     description: 'Bans Civilization by id or alias ignoring bans limit (OP)',
     help: '`!civ opban [Id/Alias]`',
-    execute:async function(message, args) {
+    execute: async function (message, args) {
         //read GameState
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');
         //check phase
@@ -24,14 +24,13 @@ module.exports = {
                 return;
             }
 
-            for (let j = 0; j < args.length && CheckCanBan(CurrState, message); j++) {
+            for (let j = 0; j < args.length; j++) {
                 let arg = args[j];
                 //read list
                 var CivList = FF.Read('./commands/CivRandomizer/CivList.json');
 
                 //find civ by id
                 C = CivList.find(x => x.id == arg);
-                console.log(C);
 
 
                 // if not found by id
@@ -39,14 +38,9 @@ module.exports = {
                     C = [];
                     //find all aliases
                     CivList.forEach(civ => {
-                        for (let i = 0; i < civ.Alias.length; i++) {
-                            const A = civ.Alias[i];
-                            if (A.includesIgnoreCase(arg)) {
-                                C.push(civ);
-                                console.log(A);
 
-                                break;
-                            }
+                        if (includesIgnoreCase(civ.Alias, arg)) {
+                            C.push(civ);
                         }
                     });
                     //check if multiple
@@ -55,32 +49,26 @@ module.exports = {
                         C.forEach(civ => {
                             txt += `\n${civ.id}. ${civ.Alias.join(` - `)}`
                         });
-                        txt += "\nTry again";
-                        message.channel.send(text);
+                        message.channel.send(txt);
                         return;
                     }
                     if (C.length == 1) {
                         C = C[0];
                     }
                 }
+                console.log(C);
 
 
                 //if found 
                 if (C) {
-                    //check if banned
+                    //check not if banned
                     if (!CheckBanned(CurrState, C)) {
                         Ban(C, CurrState);
-                        CurrState.Banners.push(`${message.author}`);
-                        message.channel.send(`${message.author} banned ${C.Name} (${C.id})\nBans: ${CurrState.bansActual}/${CurrState.bansFull}`, {
+
+                        message.channel.send(`${message.author} opbanned ${C.Name} (${C.id})`, {
                             file: `./commands/CivRandomizer/${C.picPath}`
                         });
                         FF.Write('./commands/CivRandomizer/CurrentState.json', CurrState);
-                        sleep(200).then(() => {
-                            CheckBansEnd(CurrState, message);
-                        });
-                        sleep(200).then(() => {
-                            FF.Write('./commands/CivRandomizer/CurrentState.json', CurrState);
-                        });
                     } else {
                         message.reply(`${C.Name} (${C.id}) is already banned `, {
                             file: `./commands/CivRandomizer/${C.picPath}`
@@ -110,12 +98,14 @@ function Ban(C, CurrState) {
     CurrState.banned.push(C.id);
 
 }
-Array.prototype.includesIgnoreCase = function (value) {
+function includesIgnoreCase(arr, value) {
     let LCvalue = value.toLowerCase();
-    arr.forEach(E => {
-        if (LCvalue == E.toLowerCase())
-            return true;
-    });
-    return false;
-
+    let found = false;
+    for (let i = 0; i < arr.length; i++) {
+        const E = arr[i];
+        if (E.toLowerCase().includes(LCvalue)) {
+            found = true;
+        }
+    }
+    return found;
 }

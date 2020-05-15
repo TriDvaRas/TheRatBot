@@ -43,6 +43,7 @@ module.exports = {
 
                 //find civ by id
                 C = CivList.find(x => x.id == arg);
+                console.log(1);
                 console.log(C);
 
 
@@ -53,8 +54,9 @@ module.exports = {
                     CivList.forEach(civ => {
                         for (let i = 0; i < civ.Alias.length; i++) {
                             const A = civ.Alias[i];
-                            if (A.includesIgnoreCase(arg)) {
+                            if (includesIgnoreCase(A, arg)) {
                                 C.push(civ);
+                                console.log(2);
                                 console.log(A);
 
                                 break;
@@ -137,12 +139,13 @@ function CheckBansEnd(CurrState, message) {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-Array.prototype.includesIgnoreCase = function (value) {
+function includesIgnoreCase(arr, value) {
     let LCvalue = value.toLowerCase();
-    arr.forEach(E => {
-        if (LCvalue == E.toLowerCase())
-            return true;
-    });
-    return false;
 
+    for (let i = 0; i < arr.length; i++) {
+        const E = arr[i];
+        if (E.toLowerCase().includes(LCvalue))
+            return true;
+    }
+    return false;
 }

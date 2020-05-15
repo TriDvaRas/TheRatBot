@@ -2,6 +2,7 @@
     "started":"false",
     "repeat": false,
     "mode":"",
+    "autoplus":"",
     "Phase":"",
     "gameSize":"0",
     "playerSize":"",

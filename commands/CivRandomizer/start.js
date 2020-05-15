@@ -54,9 +54,12 @@ function StartGame(message, args, CurrState) {
         return;
         //auto
     }//auto 
-    else if (args[0] == "auto" || args[0] == "a") {
+    else if (args[0] == "auto" || args[0] == "a" || args[0] == "a+") {
         CurrState.mode = "auto";
-
+        if (args[0] == "a+")
+            CurrState.autoplus = true;
+        else
+            CurrState.autoplus = false;
         //check CPP
         if (!args[1] || !parseInt(args[1]) || parseInt(args[1]) < 1 || parseInt(args[1]) > 6) {
             message.channel.send("Wrong arguments");
@@ -75,7 +78,7 @@ function StartGame(message, args, CurrState) {
             CurrState.banSize = 0;
         }
         return;
-    }else {
+    } else {
         message.channel.send(`Game start failed.`);
     }
 }

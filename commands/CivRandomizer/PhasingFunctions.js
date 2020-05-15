@@ -23,20 +23,27 @@ var FF = require('./FileFunctions.js');
 function GeneratePicks(CurrState, message) {
     shuffle(CurrState.Players, CurrState.PlayersId);
     for (let i = 0; i < CurrState.PlayersId.length; i++) {
-        GetCivLine(CurrState, message, CurrState.Players[i], CurrState.PlayersId[i]);
+
+        GetCivLine(CurrState, message, i);
 
     }
 }
 //get player civ set
-function GetCivLine(CurrState, message, Player, PlayerId) {
+function GetCivLine(CurrState, message, i) {
+    let Player = CurrState.Players[i];
+    let PlayerId = CurrState.PlayersId[i];
     const mergeImg = require('merge-img');
     var CivList = FF.Read('./commands/CivRandomizer/CivList.json');
-    let txt = `${PlayerId}:\n`;
+    let txt;
+    if (CurrState.autoplus)
+        txt = `Player ${i+1}:\n`;
+    else
+        txt = `${PlayerId}:\n`;
     images = [];
     for (let i = 0; i < CurrState.playerSize; i++) {
         Id = GetRandomCivId(CurrState);
-        txt += `${CivList[Id-1].Name}/`;
-        images.push(`./commands/CivRandomizer/${CivList[Id-1].picPath}`);
+        txt += `${CivList[Id - 1].Name}/`;
+        images.push(`./commands/CivRandomizer/${CivList[Id - 1].picPath}`);
     }
     mergeImg(images)
         .then((img) => {

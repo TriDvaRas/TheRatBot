@@ -5,7 +5,7 @@ module.exports = {
     name: 'joinEnd',
     description: 'CivRandomizer join phase End',
     help: 'No help here(',
-    execute(message, args) {
+    execute:async function(message, args) {
         //read GameState
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');
         //check phase

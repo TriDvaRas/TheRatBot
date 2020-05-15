@@ -2,8 +2,8 @@ module.exports = {
     name: 'list',
     description: 'CivRandomizer list',
     help: 'No help here(',
-    execute(message, args) {
         if (!Perm.checkRoles(message, CurrState, false, false, true)) {
+    execute:async function(message, args) {
             message.reply("ахуел?(CivRole only)");
             return;
         }

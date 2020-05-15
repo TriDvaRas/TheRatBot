@@ -5,7 +5,7 @@ module.exports = {
     name: 'start',
     description: 'CivRandomizer Game Start',
     help: 'Usage:\n `!civ start auto [CivPerPlayer(1-6)] <BansPerPlayer>`\n `!civ start manual <BansPerPlayer>`',
-    execute(message, args) {
+    execute:async function(message, args) {
         if (args.length > 0) {
             //read
             var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');

@@ -6,7 +6,7 @@ module.exports = {
     name: 'opban',
     description: 'CivRandomizer forceban',
     help: 'No help here(',
-    execute(message, args) {
+    execute:async function(message, args) {
         //read GameState
         var data = fs.readFileSync('./commands/CivRandomizer/CurrentState.json', "utf8");
         var CurrState = JSON.parse(data);

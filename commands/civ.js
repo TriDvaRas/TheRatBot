@@ -20,7 +20,7 @@ module.exports = {
     name: 'civ',
     description: 'CivRandomizer',
     help: '`!civ start`\n`!civ reset`\n`!civ list`',
-    execute(message, args) {
+    execute:async function(message, args) {
         //channel lock check
         cfg = FF.Read('./commands/CivRandomizer/config.json');
         if (!cfg.WhiteCommands.includes(args[0]))

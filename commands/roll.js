@@ -5,7 +5,7 @@ module.exports = {
         "!roll help\n"+
         "!roll num1-num2\n"+
         "!roll num1dnum2\n",
-	execute(message, args) {
+	execute:async function(message, args) {
         
         if(!args.length==0){
             if(args[0]=="help"){

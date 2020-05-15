@@ -6,7 +6,7 @@ module.exports = {
     name: 'reset',
     description: 'CivRandomizer reset',
     help: 'No help here(',
-    execute(message, args) {
+    execute:async function(message, args) {
         //read game state
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');
         //check permissions

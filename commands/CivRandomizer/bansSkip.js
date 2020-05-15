@@ -4,7 +4,7 @@ module.exports = {
     name: 'bansSkip',
     description: 'CivRandomizer bansSkip',
     help: 'No help here(',
-    execute(message, args) {
+    execute:async function(message, args) {
         //read GameState
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');
         //check phase

@@ -5,7 +5,7 @@ module.exports = {
     name: 'channelLock',
     description: 'Channel Lock',
     help: 'Admin only',
-    execute(message, args) {
+    execute:async function(message, args) {
         if (!Perm.checkRoles(message, "skip", true, false, false)) {
             message.reply("ахуел?(Admin only)");
             return;

@@ -1,9 +1,11 @@
+
+var Perm = require('./PermissionsFunctions.js');
 module.exports = {
     name: 'list',
     description: 'CivRandomizer list',
     help: 'No help here(',
-        if (!Perm.checkRoles(message, CurrState, false, false, true)) {
     execute:async function(message, args) {
+        if (!Perm.checkRoles(message,  0, false, false, true)) {
             message.reply("ахуел?(CivRole only)");
             return;
         }

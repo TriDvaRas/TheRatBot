@@ -8,7 +8,7 @@ module.exports = {
             message.member.addRole(message.guild.roles.find(role => role.name === roleName));
             message.channel.send(`${message.author} got \`${roleName}\` role`);
         }else{
-            message.channel.reply(`you already have a role`);
+            message.channel.send(`you already have a role`);
         }
 
 

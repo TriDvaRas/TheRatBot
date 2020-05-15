@@ -2,3 +2,4 @@ config.json
 Start.bat
 node_modules
 StartDebug.bat
+commands/CivRandomizer/Imgs/Players/*

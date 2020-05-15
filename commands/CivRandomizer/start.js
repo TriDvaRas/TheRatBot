@@ -4,8 +4,8 @@ var Perm = require('./PermissionsFunctions.js');
 module.exports = {
     name: 'start',
     description: 'Starts CivRandomizer Game',
-    help: '`!civ start auto [CivPerPlayer(1-6)] <BansPerPlayer>` - gives civs by User Names'+
-    '`!civ start auto+ [CivPerPlayer(1-6)] <BansPerPlayer>` - gives civs by Player Slots',
+    help: '`!civ start auto [CivPerPlayer(1-6)] <BansPerPlayer>` - gives civs by User Names' +
+        '`!civ start auto+ [CivPerPlayer(1-6)] <BansPerPlayer>` - gives civs by Player Slots',
     execute: async function (message, args) {
         if (args.length > 0) {
             //read state
@@ -36,28 +36,9 @@ function StartGame(message, args, CurrState) {
 
     //set game state
     CurrState.Op = `${message.author}`
-    //manual
-    if (args[0] == "manual" || args[0] == "m") {
-
-        CurrState.mode = "manual";
-        CurrState.started = "true";
-        message.channel.send(`Game started. Op - ${message.author}`);
-        //check for bans
-        //start bans
-        if (args[1] > 0) {
-            Phaser.StartBans(CurrState, message, args[1]);
-            CurrState.banSize = args[1];
-        }//start picks
-        else {
-            Phaser.StartPicks(CurrState, message)
-            CurrState.banSize = 0;
-        }
-        return;
-
-    }
-    else if (args[0] == "auto" || args[0] == "a" || args[0] == "a+") {
+    if (args[0] == "auto" || args[0] == "auto+" || args[0] == "a" || args[0] == "a+") {
         CurrState.mode = "auto";
-        if (args[0] == "a+")
+        if (args[0] == "auto+" || args[0] == "a+")
             CurrState.autoplus = true;
         else
             CurrState.autoplus = false;
@@ -85,6 +66,6 @@ function StartGame(message, args, CurrState) {
         }
         return;
     } else {
-        message.channel.send(`Game start failed.`);
+        message.channel.send(`Wrong arguments`);
     }
 }

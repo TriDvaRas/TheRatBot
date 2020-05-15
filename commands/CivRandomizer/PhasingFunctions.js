@@ -5,11 +5,7 @@ module.exports = {
     },
     StartPicks: function StartPicks(CurrState, message) {
         CurrState.Phase = "picks";
-        if (CurrState.mode == "manual") {
-            message.channel.send(" **- Pick phase -** \nUse `!civ get [Count]`");
-        } else {
-            message.channel.send(" **- Pick phase -** ");
-        }
+        message.channel.send(" **- Pick phase -** ");
         GeneratePicks(CurrState, message);
     },
     StartJoins: function StartJoins(CurrState, message) {//`!civ joinSkip <PlayerCount>` to skip phase(Op-only)\n
@@ -36,7 +32,7 @@ function GetCivLine(CurrState, message, i) {
     var CivList = FF.Read('./commands/CivRandomizer/CivList.json');
     let txt;
     if (CurrState.autoplus)
-        txt = `Player ${i+1}:\n`;
+        txt = `Player ${i + 1}:\n`;
     else
         txt = `${PlayerId}:\n`;
     images = [];

@@ -4,3 +4,4 @@ node_modules
 StartDebug.bat
 commands/CivRandomizer/Imgs/Players/*
 config.json
+commands/CivRandomizer/CurrentState.json

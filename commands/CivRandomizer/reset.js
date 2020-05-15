@@ -4,8 +4,8 @@ var Perm = require('./PermissionsFunctions.js');
 
 module.exports = {
     name: 'reset',
-    description: 'CivRandomizer reset',
-    help: 'No help here(',
+    description: 'Resets current game state',
+    help: '`!civ reset`',
     execute:async function(message, args) {
         //read game state
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');

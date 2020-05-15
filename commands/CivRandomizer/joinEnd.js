@@ -3,8 +3,8 @@ var Phaser = require('./PhasingFunctions.js');
 var Perm = require('./PermissionsFunctions.js');
 module.exports = {
     name: 'joinEnd',
-    description: 'CivRandomizer join phase End',
-    help: 'No help here(',
+    description: 'Ends join phase (OP)',
+    help: '`!civ joinEnd`\n`!civ end`',
     execute:async function(message, args) {
         //read GameState
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');

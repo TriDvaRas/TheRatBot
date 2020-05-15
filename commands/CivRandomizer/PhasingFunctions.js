@@ -1,6 +1,6 @@
 module.exports = {
     StartBans: function StartBans(CurrState, message, bSize) {
-        message.channel.send(' **- Bans phase -** \n`!civ ban [civId/civName]` to ban\n`!civ bansEnd` to finish bans phase(Op-only)\n`!civ list` for civ list(ахуеть)');
+        message.channel.send(' **- Bans phase -** \n`!civ ban [civId/civAlias/skip]` to ban\n `!civ opban [civId/civAlias/skip]` for extra bans (OP)\n`!civ bansSkip` to finish bans phase (OP)\n`!civ list` for civs list');
         CurrState.Phase = "bans";
     },
     StartPicks: function StartPicks(CurrState, message) {
@@ -13,7 +13,7 @@ module.exports = {
         GeneratePicks(CurrState, message);
     },
     StartJoins: function StartJoins(CurrState, message) {//`!civ joinSkip <PlayerCount>` to skip phase(Op-only)\n
-        message.channel.send(' **- Join phase -** \n`!civ join` to join game\n`!civ joinEnd` to end phase(Op-only)');
+        message.channel.send(' **- Join phase -** \n`!civ join` to join game\n`!civ add [UserMentions] (OP)` to add players\n`!civ joinEnd` to end phase (OP)');
         CurrState.Phase = "join";
     }
 }

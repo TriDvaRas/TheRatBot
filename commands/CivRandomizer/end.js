@@ -1,7 +1,8 @@
 var FF = require('./FileFunctions.js');
 module.exports = {
     name: 'end',
-    description: 'End phase',
+    description: 'Ends current phase if possible (OP)',
+    help: `\`!civ end\``,
     execute:async function(message, args) {
         //read state
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');
@@ -16,6 +17,7 @@ module.exports = {
             default:
                 break;
         }
-        comm.execute(message, args);
+        if(comm)
+            comm.execute(message, args);
     },
 };

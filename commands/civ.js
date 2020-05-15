@@ -19,8 +19,8 @@ for (const file of commandFiles) {
 module.exports = {
     name: 'civ',
     description: 'CivRandomizer',
-    help: '`!civ start`\n`!civ reset`\n`!civ list`',
-    execute:async function(message, args) {
+    help: '`!civ start` to start the game',
+    execute: async function (message, args) {
         //channel lock check
         cfg = FF.Read('./commands/CivRandomizer/config.json');
         if (!cfg.WhiteCommands.includes(args[0]))
@@ -36,9 +36,14 @@ module.exports = {
             if (!client.commands.has(command)) return;
             //CommandEx
             try {
-                if (config.deleteCommands)
+                if (args[0] == "help") {
+                    message.channel.send(`${client.commands.get(command).description}\nUsage:\n${client.commands.get(command).help}`)
+                }else{
                     client.commands.get(command).execute(message, args);
-                message.delete(5000);
+                    if (config.deleteCommands)
+                        message.delete(5000);
+                }
+                
 
             } catch (error) {
                 console.error(error);

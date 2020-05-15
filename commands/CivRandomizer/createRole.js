@@ -2,8 +2,8 @@
 var Perm = require('./PermissionsFunctions.js');
 module.exports = {
     name: 'createRole',
-    description: 'Get civ role',
-    help: 'Admin only',
+    description: 'Creates [roleName] role (Admin)',
+    help: `\`!civ createRole [roleName]\` (defalult name is \`Civilized\`)`,
     execute:async function(message, args) {
         if (!Perm.checkRoles(message, "skip", true, false, false)) {
             message.reply("ахуел?(Admin only)");

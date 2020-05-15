@@ -2,8 +2,8 @@ var FF = require('./FileFunctions.js');
 var Perm = require('./PermissionsFunctions.js');
 module.exports = {
     name: 'add',
-    description: 'CivRandomizer addPlayer',
-    help: 'No help here(',
+    description: 'Adds users to current game (OP)',
+    help: '`!civ add [UserMentions]`',
     execute:async function(message, args) {
         //read GameState
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');

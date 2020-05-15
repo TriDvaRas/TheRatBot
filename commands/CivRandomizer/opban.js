@@ -4,8 +4,8 @@ var Perm = require('./PermissionsFunctions.js');
 
 module.exports = {
     name: 'opban',
-    description: 'CivRandomizer forceban',
-    help: 'No help here(',
+    description: 'Bans Civilization by id or alias ignoring bans limit (OP)',
+    help: '`!civ opban [Id/Alias/skip]`',
     execute:async function(message, args) {
         //read GameState
         var data = fs.readFileSync('./commands/CivRandomizer/CurrentState.json', "utf8");

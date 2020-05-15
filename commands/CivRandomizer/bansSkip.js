@@ -2,8 +2,8 @@ var FF = require('./FileFunctions.js');
 var Phaser = require('./PhasingFunctions.js');
 module.exports = {
     name: 'bansSkip',
-    description: 'CivRandomizer bansSkip',
-    help: 'No help here(',
+    description: 'Ends bans phase (OP)',
+    help: '`!civ banSkip`\n`!civ end`',
     execute:async function(message, args) {
         //read GameState
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');

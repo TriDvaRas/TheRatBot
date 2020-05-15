@@ -3,9 +3,10 @@ var Phaser = require('./PhasingFunctions.js');
 var Perm = require('./PermissionsFunctions.js');
 module.exports = {
     name: 'start',
-    description: 'CivRandomizer Game Start',
-    help: 'Usage:\n `!civ start auto [CivPerPlayer(1-6)] <BansPerPlayer>`\n `!civ start manual <BansPerPlayer>`',
-    execute:async function(message, args) {
+    description: 'Starts CivRandomizer Game',
+    help: '`!civ start auto [CivPerPlayer(1-6)] <BansPerPlayer>` - gives civs by User Names'+
+    '`!civ start auto+ [CivPerPlayer(1-6)] <BansPerPlayer>` - gives civs by Player Slots',
+    execute: async function (message, args) {
         if (args.length > 0) {
             //read state
             var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');
@@ -28,7 +29,7 @@ module.exports = {
             FF.Write('./commands/CivRandomizer/CurrentState.json', CurrState);
             return;
         }
-        message.channel.send(this.help);
+        message.channel.send(`${this.description}\nUsage:\n${this.help}`);
     },
 };
 function StartGame(message, args, CurrState) {
@@ -52,8 +53,8 @@ function StartGame(message, args, CurrState) {
             CurrState.banSize = 0;
         }
         return;
-        //auto
-    }//auto 
+
+    }
     else if (args[0] == "auto" || args[0] == "a" || args[0] == "a+") {
         CurrState.mode = "auto";
         if (args[0] == "a+")
@@ -61,11 +62,16 @@ function StartGame(message, args, CurrState) {
         else
             CurrState.autoplus = false;
         //check CPP
-        if (!args[1] || !parseInt(args[1]) || parseInt(args[1]) < 1 || parseInt(args[1]) > 6) {
+        if (!args[1] || !parseInt(args[1])) {
             message.channel.send("Wrong arguments");
             message.channel.send(this.help);
             return;
         }
+        if (parseInt(args[1]) < 1)
+            args[1] = 1;
+        else if (parseInt(args[1]) > 6)
+            args[1] = 6;
+
         CurrState.playerSize = parseInt(args[1]);
         CurrState.started = "true";
         message.channel.send(`Game started. Op - ${message.author}`);

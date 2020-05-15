@@ -1,7 +1,8 @@
 
 module.exports = {
     name: 'getRole',
-    description: 'Get civ role',
+    description: 'Gives you civ role',
+    help: `\`!civ getRole\``,
     execute:async function(message, args) {
         const { roleName } = require('./config.json');
         if (!message.member.roles.some(role => role.name === roleName)) {

@@ -26,9 +26,12 @@ client.on('message', message => {
 	const command = args.shift().toLowerCase();
 	//CommandListCheck
 	if (!client.commands.has(command)) return;
-	//CommandEx
+	//CommandExec
 	try {
-		client.commands.get(command).execute(message, args);
+		if (args[0] == "help") {
+			message.channel.send(`${client.commands.get(command).description}\nUsage:\n${client.commands.get(command).help}`)
+		} else
+			client.commands.get(command).execute(message, args);
 	} catch (error) {
 		console.error(error);
 		message.reply('Ты еблан?');

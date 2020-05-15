@@ -3,8 +3,8 @@ var Phaser = require('./PhasingFunctions.js');
 var Perm = require('./PermissionsFunctions.js');
 module.exports = {
     name: 're',
-    description: 'CivRandomizer re',
-    help: 'No help here(',
+    description: 'Votes for rerolling civs',
+    help: '`!civ re`',
     execute:async function(message, args) {
         //read GameState
         var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');

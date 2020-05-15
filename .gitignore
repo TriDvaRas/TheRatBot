@@ -5,3 +5,4 @@ StartDebug.bat
 commands/CivRandomizer/Imgs/Players/*
 config.json
 commands/CivRandomizer/CurrentState.json
+config.json

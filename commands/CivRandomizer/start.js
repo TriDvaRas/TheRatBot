@@ -7,12 +7,20 @@ module.exports = {
     help: 'Usage:\n `!civ start auto [CivPerPlayer(1-6)] <BansPerPlayer>`\n `!civ start manual <BansPerPlayer>`',
     execute:async function(message, args) {
         if (args.length > 0) {
-            //read
+            //read state
             var CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');
+
             //check civ role
             if (!Perm.checkRoles(message, CurrState, false, false, true)) {
                 message.reply("ахуел?(CivRole only)");
                 return;
+            }
+            //check if game is started
+            if (CurrState.started == 'true') {
+                var reseter = require('./reset.js');
+                reseter.execute(message, "auto");
+                //reread State
+                CurrState = FF.Read('./commands/CivRandomizer/CurrentState.json');
             }
             //start game
             StartGame(message, args, CurrState);
@@ -24,11 +32,7 @@ module.exports = {
     },
 };
 function StartGame(message, args, CurrState) {
-    //check if game is started
-    if (CurrState.started == 'true') {
-        message.reply("Game is already started");
-        return;
-    }
+
     //set game state
     CurrState.Op = `${message.author}`
     //manual

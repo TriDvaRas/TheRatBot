@@ -16,11 +16,12 @@ module.exports = {
         }
         var fs = require('fs');
         var data = fs.readFileSync('./commands/CivRandomizer/BaseState.json', "utf8");
-        fs.writeFile('./commands/CivRandomizer/CurrentState.json', data, function (err) {
+        fs.writeFileSync('./commands/CivRandomizer/CurrentState.json', data, function (err) {
             if (err) {
                 console.log(err);
             }
         });
-        message.channel.send(`Game reset by ${message.author}`);
+        if (args != "auto")
+            message.channel.send(`Game reset by ${message.author}`);
     },
 };

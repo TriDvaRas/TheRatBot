@@ -24,29 +24,73 @@ module.exports = {
                 message.reply("ахуел?(Op/Admin only)");
                 return;
             }
-            //read list
-            var data1 = fs.readFileSync("./commands/CivRandomizer/CivList.json", "utf8");
-            var CivList = JSON.parse(data1);
-            //find civ by args
-            C = CivList.find(x => x.id == args[0]);
-            if (!C) {
-                C = CivList.find(x => x.Name == args[0]);
-            }
-            //if found 
-            if (C) {
-                //check if banned
-                if (!CheckBanned(CurrState, C)) {
-                    Ban(C, CurrState);
-                    CurrState.Banners.push(`${message.author}`);
-                    message.channel.send(`Banned ${C.Name} (${C.id})`, {
-                        file: `./commands/CivRandomizer/${C.picPath}`
+
+            for (let j = 0; j < args.length && CheckCanBan(CurrState, message); j++) {
+                let arg = args[j];
+                //read list
+                var CivList = FF.Read('./commands/CivRandomizer/CivList.json');
+
+                //find civ by id
+                C = CivList.find(x => x.id == arg);
+                console.log(C);
+
+
+                // if not found by id
+                if (!C) {
+                    C = [];
+                    //find all aliases
+                    CivList.forEach(civ => {
+                        for (let i = 0; i < civ.Alias.length; i++) {
+                            const A = civ.Alias[i];
+                            if (A.includesIgnoreCase(arg)) {
+                                C.push(civ);
+                                console.log(A);
+
+                                break;
+                            }
+                        }
                     });
-                } else {
-                    message.reply(`${C.Name} (${C.id}) is already banned `, {
-                        file: `./commands/CivRandomizer/${C.picPath}`
-                    });
+                    //check if multiple
+                    if (C.length > 1) {
+                        let txt = `Multiple aliases for \`${arg}\`:`;
+                        C.forEach(civ => {
+                            txt += `\n${civ.id}. ${civ.Alias.join(` - `)}`
+                        });
+                        txt += "\nTry again";
+                        message.channel.send(text);
+                        return;
+                    }
+                    if (C.length == 1) {
+                        C = C[0];
+                    }
+                }
+
+
+                //if found 
+                if (C) {
+                    //check if banned
+                    if (!CheckBanned(CurrState, C)) {
+                        Ban(C, CurrState);
+                        CurrState.Banners.push(`${message.author}`);
+                        message.channel.send(`${message.author} banned ${C.Name} (${C.id})\nBans: ${CurrState.bansActual}/${CurrState.bansFull}`, {
+                            file: `./commands/CivRandomizer/${C.picPath}`
+                        });
+                        FF.Write('./commands/CivRandomizer/CurrentState.json', CurrState);
+                        sleep(200).then(() => {
+                            CheckBansEnd(CurrState, message);
+                        });
+                        sleep(200).then(() => {
+                            FF.Write('./commands/CivRandomizer/CurrentState.json', CurrState);
+                        });
+                    } else {
+                        message.reply(`${C.Name} (${C.id}) is already banned `, {
+                            file: `./commands/CivRandomizer/${C.picPath}`
+                        });
+                    }
                 }
             }
+            //-------------------------------------------------------------------------
+
         }
         //write
         fs.writeFile('./commands/CivRandomizer/CurrentState.json', JSON.stringify(CurrState, null, 2), function (err) {

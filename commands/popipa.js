@@ -1,7 +1,7 @@
 
 module.exports = {
 	name: 'popipa',
-	description: 'Ping!',
+	description: 'Popipa!',
 	execute:async function(message, args) {
 		message.channel.send('pipopa');
 	},

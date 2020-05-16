@@ -45,8 +45,12 @@ module.exports = {
                         break;
                     };
                 }
-                if (remove)
+                if (remove){
                     DisableDLC(dlc, CurrState);
+                    message.channel.send(`${message.author} diabled \`${dlc}\``, {
+                        files: [`./commands/CivRandomizer/Imgs/DLC/${dlc}.png`]
+                    });
+                }
             }
             var CivList = FF.Read('./commands/CivRandomizer/CivList.json');
             for (let i = 0; i < CurrState.Civs.length; i++) {

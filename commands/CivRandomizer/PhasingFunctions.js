@@ -9,7 +9,7 @@ module.exports = {
         GeneratePicks(CurrState, message);
     },
     StartJoins: function StartJoins(CurrState, message) {//`!civ joinSkip <PlayerCount>` to skip phase(Op-only)\n
-        message.channel.send(' **- Join phase -** \n`!civ join` to join game\n`!civ add [UserMention(s)]` to add player(s) (OP)\n`!civ joinEnd` to end phase (OP)');
+        message.channel.send(' **- Join phase -** \n`!civ join` to join game\n`!civ add [UserMention(s)]` to add player(s) (OP)\n`!civ joinEnd` to end phase (OP)\n`!civ dlc [w/b] [DLC names]` to whitelist/blacklist dlcs');
         CurrState.Phase = "join";
     }
 }

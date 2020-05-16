@@ -4,19 +4,21 @@ module.exports = {
     name: 'createRole',
     description: 'Creates [roleName] role (Admin)',
     help: `\`!civ createRole [roleName]\` (defalult name is \`Civilized\`)`,
-    execute:async function(message, args) {
+    execute: async function (message, args) {
         if (!Perm.checkRoles(message, "skip", true, false, false)) {
             message.reply("ахуел?(Admin only)");
             return;
         }
         const { roleName } = require('./config.json');
-        if (!message.guild.roles.find(role => role.name === roleName)) {
-            message.guild.createRole({
-                name: roleName,
-                mentionable: true,
-                color: [64, 255, 159]
+        if (!message.guild.roles.cache.some(role => role.name === roleName)) {
+            message.guild.roles.create({
+                data: {
+                    name: roleName,
+                    mentionable: true,
+                    color: [64, 255, 159]
+                }
             });
-            message.channel.send(`${message.author} created CivRole`);
+            message.channel.send(`${message.author} created \`${roleName}\` role`);
         } else {
             message.reply(`role already exists`);
         }

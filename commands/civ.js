@@ -41,7 +41,7 @@ module.exports = {
                 }else{
                     client.commands.get(command).execute(message, args);
                     if (config.deleteCommands)
-                        message.delete(5000);
+                        message.delete({timeout: 5000});
                 }
                 
 

@@ -1,6 +1,6 @@
 module.exports = {
     StartBans: function StartBans(CurrState, message, bSize) {
-        message.channel.send(' **- Bans phase -** \n`!civ ban [civId/civAlias/skip]` to ban\n `!civ opban [civId/civAlias/skip]` for extra bans (OP)\n`!civ bansSkip` to finish bans phase (OP)\n`!civ list` for civs list');
+        message.channel.send(' **- Bans phase -** \n`!civ ban [civId/civAlias/skip]` to ban\n`!civ opban [civId/civAlias]` for extra bans (OP)\n`!civ bansSkip` to finish bans phase (OP)\n`!civ list` for civs list');
         CurrState.Phase = "bans";
     },
     StartPicks: function StartPicks(CurrState, message) {
@@ -9,7 +9,7 @@ module.exports = {
         GeneratePicks(CurrState, message);
     },
     StartJoins: function StartJoins(CurrState, message) {//`!civ joinSkip <PlayerCount>` to skip phase(Op-only)\n
-        message.channel.send(' **- Join phase -** \n`!civ join` to join game\n`!civ add [UserMentions] (OP)` to add players\n`!civ joinEnd` to end phase (OP)');
+        message.channel.send(' **- Join phase -** \n`!civ join` to join game\n`!civ add [UserMention(s)]` to add player(s) (OP)\n`!civ joinEnd` to end phase (OP)');
         CurrState.Phase = "join";
     }
 }
@@ -45,7 +45,7 @@ function GetCivLine(CurrState, message, i) {
         .then((img) => {
             img.write(`./commands/CivRandomizer/Imgs/Players/${Player}.png`, () => {
                 message.channel.send(txt.slice(0, -1), {
-                    file: `./commands/CivRandomizer/Imgs/Players/${Player}.png`
+                    files: [`./commands/CivRandomizer/Imgs/Players/${Player}.png`]
                 });
             });
 

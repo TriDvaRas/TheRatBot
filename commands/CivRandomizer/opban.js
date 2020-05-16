@@ -1,7 +1,7 @@
 //imports 
-var fs = require('fs');
 var Perm = require('./PermissionsFunctions.js');
 var FF = require('./FileFunctions.js');
+var BanF = require('./BansFunctions.js');
 module.exports = {
     name: 'opban',
     description: 'Bans Civilization by id or alias ignoring bans limit (OP)',
@@ -39,7 +39,7 @@ module.exports = {
                     //find all aliases
                     CivList.forEach(civ => {
 
-                        if (includesIgnoreCase(civ.Alias, arg)) {
+                        if (BanF.includesIgnoreCase(civ.Alias, arg)) {
                             C.push(civ);
                         }
                     });
@@ -52,26 +52,31 @@ module.exports = {
                         message.channel.send(txt);
                         return;
                     }
+                    else if (C.length == 0) {
+                        let txt = `No aliases found for \`${arg}\`:`;
+                        message.channel.send(txt);
+                        return;
+
+                    }
                     if (C.length == 1) {
                         C = C[0];
                     }
                 }
-                console.log(C);
 
 
                 //if found 
                 if (C) {
                     //check not if banned
-                    if (!CheckBanned(CurrState, C)) {
-                        Ban(C, CurrState);
+                    if (!BanF.CheckBanned(CurrState, C)) {
+                        BanF.opBan(C, CurrState);
 
                         message.channel.send(`${message.author} opbanned ${C.Name} (${C.id})`, {
-                            file: `./commands/CivRandomizer/${C.picPath}`
+                            files: [`./commands/CivRandomizer/${C.picPath}`]
                         });
                         FF.Write('./commands/CivRandomizer/CurrentState.json', CurrState);
                     } else {
                         message.send(`${message.author} ${C.Name} (${C.id}) is already banned `, {
-                            file: `./commands/CivRandomizer/${C.picPath}`
+                            files: [`./commands/CivRandomizer/${C.picPath}`]
                         });
                     }
                 }
@@ -83,29 +88,3 @@ module.exports = {
         FF.Write('./commands/CivRandomizer/CurrentState.json', CurrState);
     },
 };
-//check if civ is banned
-function CheckBanned(CurrState, C) {
-    if (CurrState.banned.find(x => x == C.id)) {
-
-        return true;
-    }
-    return false;
-}
-//remove civ from pool
-function Ban(C, CurrState) {
-
-    CurrState.Civs.splice(CurrState.Civs.findIndex(x => x == C.id), 1);
-    CurrState.banned.push(C.id);
-
-}
-function includesIgnoreCase(arr, value) {
-    let LCvalue = value.toLowerCase();
-    let found = false;
-    for (let i = 0; i < arr.length; i++) {
-        const E = arr[i];
-        if (E.toLowerCase().includes(LCvalue)) {
-            found = true;
-        }
-    }
-    return found;
-}

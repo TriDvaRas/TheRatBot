@@ -70,7 +70,7 @@ module.exports = {
                         });
                         FF.Write('./commands/CivRandomizer/CurrentState.json', CurrState);
                     } else {
-                        message.reply(`${C.Name} (${C.id}) is already banned `, {
+                        message.send(`${message.author} ${C.Name} (${C.id}) is already banned `, {
                             file: `./commands/CivRandomizer/${C.picPath}`
                         });
                     }

@@ -36,4 +36,18 @@ client.on('message', message => {
 		console.error(error);
 		message.reply('Ты еблан?');
 	}
-}); 
+});
+
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+	if (newMember.id != 272091734429663237)//272091734429663237
+		return;
+	if (newMember.channelID != null) {
+		let voiceCons = client.voice.connections.array();
+		let con = voiceCons.find(x => x.channel.id == newMember.channelID);
+		if (con) {
+			if (con.dispatcher)
+				con.dispatcher.destroy();
+			console.log("Шухер");
+		}
+	}
+})

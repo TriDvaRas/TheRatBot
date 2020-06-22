@@ -12,11 +12,6 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-
-client.once('ready', () => {
-	logger.log('info', 'Connected to realm');
-});
-
 client.login(token);
 
 client.on('message', message => {
@@ -51,3 +46,23 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 		}
 	}
 })
+
+
+
+
+
+
+
+//logger
+client.on('ready', () => logger.log('info', 'Logged in'))
+	.on('debug', m => logger.log('debug', `[*] ${m}`))
+	.on('warn', m => logger.log('warn', `[*] ${m}`))
+	.on('error', m => logger.log('error', `[*] ${m}`));
+
+process
+	.on('uncaughtException', error => {
+		logger.log('error', `[*] ${error}`);
+	})
+	.on('unhandledRejection', error => {
+		logger.log('error', `[*] ${error}`);
+	})

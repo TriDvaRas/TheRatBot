@@ -3,7 +3,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
-
+const logger = require("./logger");
 //CommandList
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -14,7 +14,7 @@ for (const file of commandFiles) {
 
 
 client.once('ready', () => {
-	console.log('Started!');
+	logger.log('info', 'Connected to realm');
 });
 
 client.login(token);
@@ -33,7 +33,7 @@ client.on('message', message => {
 		} else
 			client.commands.get(command).execute(message, args);
 	} catch (error) {
-		console.error(error);
+		logger.log('error', error);
 		message.reply('Ты еблан?');
 	}
 });
@@ -47,7 +47,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 		if (con) {
 			if (con.dispatcher)
 				con.dispatcher.destroy();
-			console.log("Шухер");
+			logger.log('warn', "Шухер");
 		}
 	}
 })

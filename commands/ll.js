@@ -12,7 +12,7 @@ async function execute(message, args) {
     if (message.author.id == 272091734429663237)
         return;
     let m = await message.channel.send({
-        files: ['./commands/assets/ll.png']
+        files: ['./assets/ll.png']
     })
     m.delete({ timeout: 3000 });
     if (message.member.voice.channel) {
@@ -36,7 +36,7 @@ function getRandomPath() {
 
     let Files = getFiles(llPath);
     if (!Files[0])
-        return './commands/assets/sample.mp3';
+        return './assets/sample.mp3';
     let id = Math.floor(Math.random() * Files.length);
     logger.log("cmd",`Now Playing${id + 1}/${Files.length}`)
     let file = Files[id];

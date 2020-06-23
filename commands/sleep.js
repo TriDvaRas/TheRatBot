@@ -11,7 +11,7 @@ async function execute(message, args) {
 	if (message.member.voice.channel) {
 		const connection = await message.member.voice.channel.join();
 		logger.log('cmd',`S in ${connection.channel.guild}/${connection.channel.name}`);
-		const dispatcher = connection.play('./commands/assets/s.mp3', {
+		const dispatcher = connection.play('./assets/s.mp3', {
 			volume: 0.5,
 		});
 		dispatcher.on('finish', () => {

@@ -2,7 +2,7 @@
 module.exports = {
 	aliases: ['die'],
 	description: 'die',
-	help: '`!die` to kill',
+	help: '`die` to kill',
 	execute,
 };
 async function execute(message, args) {

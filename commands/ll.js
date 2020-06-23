@@ -4,7 +4,7 @@ const chalk = require("chalk");
 module.exports = {
     aliases: ['ll'],
     description: 'LoveLive',
-    help: '`!ll` to die',
+    help: '`ll` to die',
     execute,
 };
 async function execute(message, args) {

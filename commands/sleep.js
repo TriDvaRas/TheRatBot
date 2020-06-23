@@ -4,7 +4,7 @@ const chalk = require("chalk");
 module.exports = {
 	aliases: [`sl'`,`sleep`],
 	description: 'sleep',
-	help: '`!sleep`',
+	help: '`sleep`',
 	execute,
 };
 async function execute(message, args) {

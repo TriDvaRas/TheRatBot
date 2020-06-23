@@ -4,7 +4,7 @@ const chalk = require("chalk");
 module.exports = {
 	aliases: ['a'],
 	description: 'AAAAAAAAAAA',
-	help: '`!a`',
+	help: '`a`',
 	execute,
 };
 async function execute(message, args) {
@@ -12,7 +12,7 @@ async function execute(message, args) {
 	if (message.member.voice.channel) {
 		const connection = await message.member.voice.channel.join();
 		logger.log('cmd',`A in ${connection.channel.guild}/${connection.channel.name}`);
-		const dispatcher = connection.play('./commands/assets/a.mp3', {
+		const dispatcher = connection.play('./assets/a.mp3', {
 			volume: 0.5,
 		});
 		dispatcher.on('finish', () => {

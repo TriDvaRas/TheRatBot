@@ -4,3 +4,5 @@ commands/f.js
 depr
 *.bat
 *.sh
+client_secret.json
+logs

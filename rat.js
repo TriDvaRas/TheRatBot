@@ -4,12 +4,16 @@ const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
 const logger = require("./logger");
+const chalk = require("chalk");
 //CommandList
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+	for (let i = 0; i < command.aliases.length; i++) 
+		client.commands.set(command.aliases[i], command);
+		
+	
 }
 
 client.login(token);
@@ -23,12 +27,14 @@ client.on('message', message => {
 	if (!client.commands.has(command)) return;
 	//CommandExec
 	try {
+		logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
+
 		if (args[0] == "help") {
 			message.channel.send(`${client.commands.get(command).description}\nUsage:\n${client.commands.get(command).help}`)
 		} else
 			client.commands.get(command).execute(message, args);
 	} catch (error) {
-		logger.log('error', error);
+		logger.log('error', "" + error);
 		message.reply('Ты еблан?');
 	}
 });

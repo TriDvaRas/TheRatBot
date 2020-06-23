@@ -1,7 +1,8 @@
 const fs = require("fs");
-const logger=require("../logger")
+const logger = require("../logger");
+const chalk = require("chalk");
 module.exports = {
-    name: 'll',
+    aliases: ['ll'],
     description: 'LoveLive',
     help: '`!ll` to die',
     execute,
@@ -56,7 +57,7 @@ function getFiles(path) {
     fileList.forEach(file => {
         Files.push({
             path: `${path}/${file}`,
-            name: file.replace(`.mp3`, ``).replace(`.flac`, ``)
+            aliases: file.replace(`.mp3`, ``).replace(`.flac`, ``)
         })
     });
     //add files from folders

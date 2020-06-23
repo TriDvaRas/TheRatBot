@@ -1,6 +1,6 @@
 
 module.exports = {
-	name: 'invite',
+	aliases: ['invite'],
 	description: 'Gives bot invite link',
 	help: '`!invite`',
 	execute:async function(message, args) {

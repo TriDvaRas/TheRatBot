@@ -1,6 +1,6 @@
 
 module.exports = {
-	name: 'die',
+	aliases: ['die'],
 	description: 'die',
 	help: '`!die` to kill',
 	execute,

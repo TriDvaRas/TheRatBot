@@ -1,6 +1,8 @@
-const logger=require("../logger")
+
+const logger = require("../logger");
+const chalk = require("chalk");
 module.exports = {
-	name: 'a',
+	aliases: ['a'],
 	description: 'AAAAAAAAAAA',
 	help: '`!a`',
 	execute,

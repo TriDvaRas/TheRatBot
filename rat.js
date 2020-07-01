@@ -2,7 +2,9 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
-const client = new Discord.Client();
+
+globalThis.client = new Discord.Client();
+
 const logger = require("./logger");
 const chalk = require("chalk");
 //CommandList
@@ -10,16 +12,31 @@ client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	for (let i = 0; i < command.aliases.length; i++) 
+	for (let i = 0; i < command.aliases.length; i++)
 		client.commands.set(command.aliases[i], command);
-		
-	
+
+
+}
+
+client.replies = new Discord.Collection();
+const replyFiles = fs.readdirSync('./replies').filter(file => file.endsWith('.js'));
+for (const file of replyFiles) {
+	const command = require(`./replies/${file}`);
+	for (let i = 0; i < command.aliases.length; i++)
+		client.replies.set(command.aliases[i], command);
+
 }
 
 client.login(token);
 
 client.on('message', message => {
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	if (message.author.bot) return;
+	client.replies.each((value, key)=>{
+		if (message.content.includes(key)){
+			value.execute(message);
+		}
+	})
+	if (!message.content.startsWith(prefix)) return;
 	//splitter
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();

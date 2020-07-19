@@ -30,7 +30,9 @@ function blame() {
     globalThis.client
         .guilds.cache.array().find(x => x.name == `3425`)
         .channels.cache.array().find(x => x.name == `main`)
-        .send(`<@${subs[Math.floor(Math.random()*subs.length)]}> ${phrase}`)
+        .send(`<@${subs[Math.floor(Math.random() * subs.length)]}> ${phrase}`)
+
+    setTimeout(blame, 3600000 * (12 + Math.random() * 24))
 }
 
 

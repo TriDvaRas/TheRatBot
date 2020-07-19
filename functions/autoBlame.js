@@ -28,7 +28,7 @@ function blame() {
     }
     //--------------------------------------------------------------------------------------
     globalThis.client
-        .guilds.cache.array().find(x => x.name == `3425`)
+        .guilds.cache.array().find(x => x.name == `Future Foundation`)
         .channels.cache.array().find(x => x.name == `main`)
         .send(`<@${subs[Math.floor(Math.random() * subs.length)]}> ${phrase}`)
 

@@ -2,6 +2,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
+const blame = require(`./functions/autoBlame`);
 
 globalThis.client = new Discord.Client();
 
@@ -75,9 +76,11 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
 
 
-
 //logger
-client.on('ready', () => logger.log('info', 'Logged in'))
+client.on('ready', () => {
+	logger.log('info', 'Logged in')
+	client.setInterval(blame, 10000)
+})
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
 	.on('warn', m => logger.log('warn', `[*] ${m}`))
 	.on('error', m => logger.log('error', `[*] ${m}`));

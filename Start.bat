@@ -1,1 +1,1 @@
-node rat.js
+nodemon rat.js

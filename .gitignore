@@ -6,3 +6,4 @@ depr
 *.sh
 client_secret.json
 logs
+assets/subscribers.json

@@ -1,9 +1,23 @@
 const IO = require(`../functions/IO`);
-module.exports = blame;
-function blame() {
+module.exports = {
+    blameRandom,
+    getNewBlame
+}
+
+function blameRandom() {
     let subs = IO.Read(`./assets/subscribers.json`);
+    let sub = subs[Math.floor(Math.random() * subs.length)];
+    let phrase = `<@${sub}> ${getNewBlame()}`;
+    globalThis.client
+        .guilds.cache.array().find(x => x.name == `3425`)
+        .channels.cache.array().find(x => x.name == `main`)
+        .send(`${phrase}`)
+    setTimeout(blameRandom, 3600000 * (12 + Math.random() * 24))
+}
+
+function getNewBlame() {
     let parts = IO.Read(`./assets/phraseParts.json`);
-    let phrase = "";
+    let phrase = ""
     if (Math.random() < 0.3)
         phrase += "ало ";
 
@@ -26,16 +40,8 @@ function blame() {
             + ` `;
         phrase += third;
     }
-    //--------------------------------------------------------------------------------------
-    globalThis.client
-        .guilds.cache.array().find(x => x.name == `Future Foundation`)
-        .channels.cache.array().find(x => x.name == `main`)
-        .send(`<@${subs[Math.floor(Math.random() * subs.length)]}> ${phrase}`)
-
-    setTimeout(blame, 3600000 * (12 + Math.random() * 24))
+    return phrase;
 }
-
-
 
 function avaGenerator(parts) {
     let r = Math.random();

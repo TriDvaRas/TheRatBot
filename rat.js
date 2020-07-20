@@ -79,7 +79,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 //logger
 client.on('ready', () => {
 	logger.log('info', 'Logged in')
-	blame();
+	blame.blameRandom();
 })
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
 	.on('warn', m => logger.log('warn', `[*] ${m}`))

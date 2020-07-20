@@ -32,8 +32,8 @@ client.login(token);
 
 client.on('message', message => {
 	if (message.author.bot) return;
-	client.replies.each((value, key)=>{
-		if (message.content.includes(key)){
+	client.replies.each((value, key) => {
+		if (message.content.includes(key)) {
 			value.execute(message);
 		}
 	})
@@ -78,8 +78,8 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
 //logger
 client.on('ready', () => {
-	logger.log('info', 'Logged in')
-	blame.blameRandom();
+	logger.log('info', 'Logged in');
+	setTimeout(blame.blameRandom, 60000);
 })
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
 	.on('warn', m => logger.log('warn', `[*] ${m}`))

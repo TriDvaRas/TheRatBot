@@ -9,10 +9,10 @@ function blameRandom() {
     let sub = subs[Math.floor(Math.random() * subs.length)];
     let phrase = `<@${sub}> ${getNewBlame()}`;
     globalThis.client
-        .guilds.cache.array().find(x => x.name == `3425`)
+        .guilds.cache.array().find(x => x.name == `Future Foundation`)
         .channels.cache.array().find(x => x.name == `main`)
         .send(`${phrase}`)
-    setTimeout(blameRandom, 3600000 * (12 + Math.random() * 24))
+    setTimeout(blameRandom, 3600000 * (10 + Math.random() * 20))
 }
 
 function getNewBlame() {

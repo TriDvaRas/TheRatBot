@@ -10,8 +10,8 @@ function blameRandom() {
     let sub = subs[Math.floor(Math.random() * subs.length)];
     let phrase = `<@${sub}> ${getNewBlame()}`;
     globalThis.client
-        .guilds.cache.array().find(x => x.name == `3425`)//Future Foundation
-        .channels.cache.array().find(x => x.name == `civ`)
+        .guilds.cache.array().find(x => x.name == `Future Foundation`)//
+        .channels.cache.array().find(x => x.name == `main`)
         .send(`${phrase}`)
     let hours = (10 + Math.random() * 16);
     logger.log(`info`, `Next blame in ${hours}h`)

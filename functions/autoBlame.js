@@ -1,5 +1,4 @@
 const IO = require(`../functions/IO`);
-const logger = require("../logger");
 module.exports = {
     blameRandom,
     getNewBlame
@@ -10,12 +9,10 @@ function blameRandom() {
     let sub = subs[Math.floor(Math.random() * subs.length)];
     let phrase = `<@${sub}> ${getNewBlame()}`;
     globalThis.client
-        .guilds.cache.array().find(x => x.name == `3425`)//Future Foundation
-        .channels.cache.array().find(x => x.name == `civ`)
+        .guilds.cache.array().find(x => x.name == `Future Foundation`)
+        .channels.cache.array().find(x => x.name == `main`)
         .send(`${phrase}`)
-    let hours = (10 + Math.random() * 16);
-    logger.log(`info`, `Next blame in ${hours}h`)
-    setTimeout(blameRandom, 3600000 * hours)
+    setTimeout(blameRandom, 3600000 * (10 + Math.random() * 20))
 }
 
 function getNewBlame() {

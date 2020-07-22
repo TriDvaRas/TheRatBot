@@ -1,6 +1,6 @@
 
 module.exports = {
-    aliases: ['да'],
+    aliases: ['да',`da`],
     execute: async function (message, args) {
         message.channel.send(`пизда`);
     },

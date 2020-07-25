@@ -7,8 +7,11 @@ module.exports = {
     description: 'Blame me!',
     help: '`blame`',
     execute: function (message, args) {
-        if (checkCD(message.author))
-            message.channel.send(`соси (кд)`)
+        if (checkCD(message.author)){
+            message.delete({timeout:5000})
+            message.channel.send(`соси (кд)`).then(botMsg=>botMsg.delete({timeout:5000}))
+
+        }
         else {
             let men = message.mentions.users.first();
             if (men)

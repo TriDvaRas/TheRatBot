@@ -8,7 +8,7 @@ module.exports = {
 function blameRandom() {
     let subs = IO.Read(`./assets/subscribers.json`);
     let sub = subs[Math.floor(Math.random() * subs.length)];
-    let phrase = `<@${sub}> ${getNewBlame()}`;
+    let phrase = `<@${sub}> **${getNewBlame()}**`;
     globalThis.client
         .guilds.cache.array().find(x => x.name == `Future Foundation`)//
         .channels.cache.array().find(x => x.name == `main`)

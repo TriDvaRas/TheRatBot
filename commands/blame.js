@@ -14,8 +14,10 @@ module.exports = {
         }
         else {
             let men = message.mentions.users.first();
-            if (men)
+            if (men){
+                message.delete()
                 message.channel.send(`${men} ${blame.getNewBlame()}`)
+            }
             else
                 message.channel.send(`${message.author} ${blame.getNewBlame()}`)
             if (message.author.tag != `TriDvaRas#4805`) {

@@ -3,6 +3,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const blame = require(`./functions/autoBlame`);
+const VH = require(`./functions/voiceHandler`);
 
 globalThis.client = new Discord.Client();
 
@@ -57,18 +58,8 @@ client.on('message', message => {
 	}
 });
 
-client.on('voiceStateUpdate', (oldMember, newMember) => {
-	if (newMember.id != 272091734429663237)//272091734429663237
-		return;
-	if (newMember.channelID != null) {
-		let voiceCons = client.voice.connections.array();
-		let con = voiceCons.find(x => x.channel.id == newMember.channelID);
-		if (con) {
-			if (con.dispatcher)
-				con.dispatcher.destroy();
-			logger.log('warn', "Шухер");
-		}
-	}
+client.on('voiceStateUpdate', (oldState, newState) => {
+	VH.checkMuteDay(oldState, newState)
 })
 
 

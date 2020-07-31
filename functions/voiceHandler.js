@@ -7,13 +7,13 @@ const creds = require(`../client_secret.json`);
 module.exports = {
     checkMuteDay
 }
-let lastDay = 0;
+let lastDay = -1;
 function checkMuteDay(oldState, newState) {
     if (oldState.selfMute == newState.selfMute) return;
 
     let currDay = new Date().getDay();
     if (lastDay == currDay) return;
-    //lastDay = currDay;
+    lastDay = currDay;
 
     let memberCount = newState.channel.members.reduce((accumulator, member) => accumulator + 1, 0)
     if (memberCount < 3) return;

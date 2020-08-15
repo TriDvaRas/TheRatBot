@@ -71,7 +71,8 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 client.on('ready', () => {
 	logger.log('info', 'Logged in');
 	//autoblame
-	setTimeout(blame.blameRandom, Math.random()*3600000);
+	if (!process.argv.includes(`test`))
+		setTimeout(blame.blameRandom, Math.random() * 3600000);
 })
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
 	.on('warn', m => logger.log('warn', `[*] ${m}`))

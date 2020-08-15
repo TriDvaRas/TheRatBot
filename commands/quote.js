@@ -1,8 +1,9 @@
 const GSS = require(`google-spreadsheet`);
 const logger = require("../logger");
 const chalk = require("chalk");
-const Discord=require(`discord.js`)
+const Discord = require(`discord.js`)
 const creds = require(`../client_secret.json`);
+const weight = require(`../assets/ratQWeight.json`);
 
 module.exports = {
     aliases: [`quote`, `q`],
@@ -66,7 +67,12 @@ async function execute(message, args) {
                         author: args[0],
                         quote: args[1]
                     }).then(row => {
-                        message.channel.send(`Added quote #${row.id}\n\`${row.quote}\`\n©**${row.author}**`).then(
+                        message.channel.send(new Discord.MessageEmbed()
+                            .setColor("RANDOM")
+                            .setTitle(`Quote #${row.id}`)
+                            .addField(row.quote, `©**${row.author}**\u200B`, false)
+                            .setFooter(`Коэффициент ржаки: ${getRjaka(row.quote)}`)
+                        ).then(
                             logger.log(`cmd`, `Added quote #${row.id}`)
                         );
                     })
@@ -77,7 +83,12 @@ async function execute(message, args) {
                         if (args[0])
                             rows = rows.filter(x => x.author.toLowerCase().includes(args[0].toLowerCase()) || x.id == args[0]);
                         let row = rows[Math.floor(Math.random() * rows.length)];
-                        message.channel.send(`Quote #${row.id}\n\`${row.quote}\`\n©**${row.author}**`).then(
+                        message.channel.send(new Discord.MessageEmbed()
+                            .setColor("RANDOM")
+                            .setTitle(`Quote #${row.id}`)
+                            .addField(row.quote, `©**${row.author}**\u200B`, false)
+                            .setFooter(`Коэффициент ржаки: ${getRjaka(row.quote)}`)
+                        ).then(
                             logger.log(`cmd`, `Sent Quote #${row.id}`)
                         );
                     });
@@ -91,7 +102,18 @@ async function execute(message, args) {
 
 }
 
-function add(author, quote) {
-
+function getRjaka(text) {
+    let sum = 0;
+    for (let i = 0; i < text.length; i++) {
+        const sym = text[i];
+        let obj = weight.find(x => x.symbol == sym)
+        if (obj) {
+            sum += obj.weight;
+        } else {
+            obj = weight.find(x => x.symbol == `def`)
+            sum += obj.weight;
+        }
+    }
+    return sum / text.length;
 }
 

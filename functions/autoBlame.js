@@ -13,7 +13,7 @@ function blameRandom() {
         .guilds.cache.array().find(x => x.name == `Future Foundation`)//
         .channels.cache.array().find(x => x.name == `main`)
         .send(`${phrase}`)
-    let hours = (10 + Math.random() * 16);
+    let hours = (20 + Math.random() * 32);
     logger.log(`info`, `Next blame in ${hours}h`)
     setTimeout(blameRandom, 3600000 * hours)
 }

@@ -70,7 +70,10 @@ client.on('message', message => {
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
 	//CommandListCheck
-	if (!client.commands.has(command)) return;
+	if (!client.commands.has(command)) {
+
+		return;
+	}
 	//CommandExec
 	try {
 		logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
@@ -99,7 +102,7 @@ client.on('ready', () => {
 	logger.log('info', 'Logged in');
 	//autoblame
 	if (!process.argv.includes(`test`))
-		setTimeout(blame.blameRandom, Math.random()* 8 * 3600000);
+		setTimeout(blame.blameRandom, (Math.random() + 0.5) * 8 * 3600000);
 })
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
 	.on('warn', m => logger.log('warn', `[*] ${m}`))

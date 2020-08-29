@@ -31,6 +31,8 @@ for (const file of replyFiles) {
 
 client.login(token);
 
+
+let lastMsgs = [];
 client.on('message', message => {
 	if (message.author.bot) return;
 	client.replies.each((reply, key) => {
@@ -38,7 +40,32 @@ client.on('message', message => {
 			reply.execute(message);
 		}
 	})
-	if (!message.content.startsWith(prefix)) return;
+	if (!message.content.startsWith(prefix)) {
+		console.log(0);
+		if (lastMsgs[0]?.content == message.content) {
+			console.log(1);
+			let reCount = lastMsgs.filter(msg => msg.content == message.content && msg.author != message.author).length
+			lastMsgs.unshift({
+				content: message.content,
+				author: message.author.id
+			})
+			if (reCount >= 2) {
+				console.log(2);
+				message.channel.send(lastMsgs[0])
+				lastMsgs = [];
+			}
+
+		}
+		else {
+			console.log(3);
+			lastMsgs = [];
+			lastMsgs.unshift({
+				content: message.content,
+				author: message.author.id
+			})
+		}
+		return;
+	}
 	//splitter
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();

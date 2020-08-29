@@ -41,7 +41,23 @@ client.on('message', message => {
 		}
 	})
 	if (!message.content.startsWith(prefix)) {
-		console.log(0);
+		if (message.content == `<@!${client.user.id}>` || message.content == `<@${client.user.id}>`) {
+			let blameStat = JSON.parse(fs.readFileSync(`./blameStats.json`))
+			message.channel.send(new Discord.MessageEmbed()
+				.setTitle(`КРЫСА(rat)`)
+				.setColor('#46a832')
+				.addField(`Server`, message.guild.name, false)
+				.addField(`Prefix`, prefix, false)
+				.addField(`Blames`, blameStat.users.reduce((accumulator, currentValue) => accumulator + currentValue.blames, 0), true)
+				.addField(`Auto Blames`, blameStat.auto, true)
+				.addField(`Subs`, getSubStat() , true)
+				.addField(`**Main Blame Abuser**`, blameStat.users.reduce((prev, current) => (prev.blames > current.blames) ? prev : current).tag, false)
+				.addField(`BlameParts`, getPartsStat(), true)
+				.setTimestamp()
+				.setFooter('Я КРЫСА', 'https://tdr.s-ul.eu/hP8HuUCR')
+			)
+			return;
+		}
 		if (lastMsgs[0]?.content == message.content) {
 			console.log(1);
 			let reCount = lastMsgs.filter(msg => msg.content == message.content && msg.author != message.author).length
@@ -66,6 +82,8 @@ client.on('message', message => {
 		}
 		return;
 	}
+
+
 	//splitter
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
@@ -92,11 +110,15 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 	VH.checkMuteDay(oldState, newState)
 })
 
+function getPartsStat() {
+	let parts = JSON.parse(fs.readFileSync(`./assets/phraseParts.json`));
+	return `First: ${parts.first.length}\nSecond: ${parts.second.length}\nThird: ${parts.third.length}\nAva: ${parts.first.length}`
+}
 
-
-
-
-
+function getSubStat() {
+	let subs = JSON.parse(fs.readFileSync(`./assets/subscribers.json`));
+	return subs.length;
+}
 //logger
 client.on('ready', () => {
 	logger.log('info', 'Logged in');

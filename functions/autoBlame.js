@@ -15,6 +15,10 @@ function blameRandom() {
         .send(`${phrase}`)
     let hours = (20 + Math.random() * 32);
     logger.log(`info`, `Next blame in ${hours}h`)
+
+    addStats(globalThis.client
+        .guilds.cache.array().find(x => x.name == `Future Foundation`)
+        .members.cache.array().find(x => x.id == sub).user);
     setTimeout(blameRandom, 3600000 * hours)
 }
 
@@ -64,4 +68,21 @@ function avaGenerator(parts) {
         }
     }
     return str;
+}
+
+function addStats(User) {
+    let stats = IO.Read(`./blameStats.json`)
+    let user = stats.users.find(u => u.tag == `<@!${User.id}>`)
+    if (!user) {
+        stats.users.push({
+            tag: `<@!${User.id}>`,
+            blames: 1,
+            name: User.tag
+        });
+
+    } else {
+        user.blames += 1;
+    }
+    stats.auto += 1;
+    IO.Write(`./blameStats.json`, stats)
 }

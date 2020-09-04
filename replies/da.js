@@ -1,7 +1,7 @@
 
 module.exports = {
-    aliases: ['да',`da`],
+    aliases: ['да', `da`],
     execute: async function (message, args) {
-        message.channel.send(`пизда`);
+        message.channel.send(`пизда`).then(msg => msg.delete({ timeout: 60000 }));
     },
 };

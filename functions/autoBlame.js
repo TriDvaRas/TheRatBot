@@ -25,8 +25,8 @@ function blameRandom() {
 function getNewBlame() {
     let parts = IO.Read(`./assets/phraseParts.json`);
     let phrase = ""
-    if (Math.random() < 0.3)
-        phrase += "ало ";
+    if (Math.random() < 0.35)
+        phrase += parts.prefix[Math.floor(Math.random() * parts.prefix.length)] + ` `;
 
     phrase += parts.first[Math.floor(Math.random() * parts.first.length)] + ` `;
     phrase += parts.second[Math.floor(Math.random() * parts.second.length)] + ` `;

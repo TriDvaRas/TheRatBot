@@ -112,7 +112,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 
 function getPartsStat() {
 	let parts = JSON.parse(fs.readFileSync(`./assets/phraseParts.json`));
-	return `First: ${parts.first.length}\nSecond: ${parts.second.length}\nThird: ${parts.third.length}\nAva: ${parts.first.length}`
+	return `Prefix: ${parts.prefix.length}\nFirst: ${parts.first.length}\nSecond: ${parts.second.length}\nThird: ${parts.third.length}\nAva: ${parts.ava.length}`
 }
 
 function getSubStat() {

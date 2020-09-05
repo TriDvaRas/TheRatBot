@@ -25,7 +25,7 @@ function blameRandom() {
 function getNewBlame() {
     let parts = IO.Read(`./assets/phraseParts.json`);
     let phrase = ""
-    if (Math.random() < 0.35)
+    if (Math.random() < 0.45)
         phrase += parts.prefix[Math.floor(Math.random() * parts.prefix.length)] + ` `;
 
     phrase += parts.first[Math.floor(Math.random() * parts.first.length)] + ` `;
@@ -41,9 +41,11 @@ function getNewBlame() {
     }
     for (let i = 0; i < n; i++) {
         let third = parts.third[Math.floor(Math.random() * parts.third.length)]
-            .replace("{n}", Math.floor(Math.random() * 6))
+            .replace("{n}", Math.floor(Math.random() * 7))
             .replace("{N}", Math.floor(Math.random() * 10000))
             .replace("{ava}", avaGenerator(parts))
+            .replace("{first}", parts.first[Math.floor(Math.random() * parts.first.length)])
+            .replace("{second}", parts.second[Math.floor(Math.random() * parts.second.length)])
             + ` `;
         phrase += third;
     }

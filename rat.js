@@ -40,6 +40,8 @@ client.on('message', message => {
 			reply.execute(message);
 		}
 	})
+	if (message.guild == null) return;
+	if (message.guild.name == "Future Foundation" && message.channel.name != "spam") return;
 	if (!message.content.startsWith(prefix)) {
 		if (message.content == `<@!${client.user.id}>` || message.content == `<@${client.user.id}>`) {
 			let blameStat = JSON.parse(fs.readFileSync(`./blameStats.json`))
@@ -50,7 +52,7 @@ client.on('message', message => {
 				.addField(`Prefix`, prefix, false)
 				.addField(`Blames`, blameStat.users.reduce((accumulator, currentValue) => accumulator + currentValue.blames, 0), true)
 				.addField(`Auto Blames`, blameStat.auto, true)
-				.addField(`Subs`, getSubStat() , true)
+				.addField(`Subs`, getSubStat(), true)
 				.addField(`**Main Blame Abuser**`, blameStat.users.reduce((prev, current) => (prev.blames > current.blames) ? prev : current).tag, false)
 				.addField(`BlameParts`, getPartsStat(), true)
 				.setTimestamp()

@@ -11,7 +11,7 @@ function blameRandom() {
     let phrase = `<@${sub}> **${getNewBlame()}**`;
     globalThis.client
         .guilds.cache.array().find(x => x.name == `Future Foundation`)//
-        .channels.cache.array().find(x => x.name == `main`)
+        .channels.cache.array().find(x => x.name == `spam`)
         .send(`${phrase}`)
     let hours = (20 + Math.random() * 32);
     logger.log(`info`, `Next blame in ${hours}h`)

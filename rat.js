@@ -110,6 +110,7 @@ client.on('message', message => {
 
 client.on('voiceStateUpdate', (oldState, newState) => {
 	VH.checkMuteDay(oldState, newState)
+	VH.checkMuteAll(oldState, newState)
 })
 
 function getPartsStat() {

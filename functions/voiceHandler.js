@@ -3,10 +3,18 @@ const logger = require("../logger");
 const chalk = require("chalk");
 const Discord = require(`discord.js`)
 const creds = require(`../client_secret.json`);
+const HAA = require(`../commands/hostAmongAss`)
 
 module.exports = {
-    checkMuteDay
+    checkMuteDay,
+    checkMuteAll
 }
+
+function checkMuteAll(oldState, newState) {
+    if (oldState.selfMute == newState.selfMute) return;
+    HAA.update(oldState, newState)
+}
+
 let lastDay = -1;
 function checkMuteDay(oldState, newState) {
     if (oldState.selfMute == newState.selfMute) return;

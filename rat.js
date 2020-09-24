@@ -126,7 +126,7 @@ client.on('ready', () => {
 	logger.log('info', 'Logged in');
 	//autoblame
 	if (!process.argv.includes(`test`))
-		setTimeout(blame.blameRandom, (Math.random() + 0.5) * 8 * 3600000);
+		setTimeout(blame.blameRandom, (Math.random() + 0.5) * 3 * 3600000);
 })
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
 	.on('warn', m => logger.log('warn', `[*] ${m}`))

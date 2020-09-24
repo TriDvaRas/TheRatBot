@@ -13,7 +13,7 @@ function blameRandom() {
         .guilds.cache.array().find(x => x.name == `Future Foundation`)//
         .channels.cache.array().find(x => x.name == `spam`)
         .send(`${phrase}`)
-    let hours = (20 + Math.random() * 32);
+    let hours = (12 + Math.random() * 12);
     logger.log(`info`, `Next blame in ${hours}h`)
 
     addStats(globalThis.client

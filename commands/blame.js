@@ -25,7 +25,7 @@ module.exports = {
             }
             if (message.author.tag != `TriDvaRas#4805`) {
                 CDs.push(`${message.author}`);
-                let h = (4 + Math.random() * 6);
+                let h = (Math.random() * 4);
                 setTimeout(() => removeCD(message.author), 3600000 * h)
                 logger.log(`info`, `${message.author.tag} kd ${h}h`)
 

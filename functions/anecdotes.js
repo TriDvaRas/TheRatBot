@@ -36,14 +36,15 @@ function gen() {
     })
         .then(res => res.json())
         .then(json => {
-            buffer.push(json.success ? () => {
-                while (json.va.endsWith(`\n`)) {
-                    json.va = json.va.slice(0, -1);
-                }
-                return json.va
-            } : "Anecdota machina broke")
+            buffer.push(json.success ? removeEnd(json.va) : "Anecdota machina broke")
         })
 }
 
+let removeEnd = (string) => {
+    while (string.endsWith(`\n`)) {
+        string = string.slice(0, -1);
+    }
+    return string
+}
 
 module.exports = { getA }

@@ -3,7 +3,7 @@ const logger = require("../logger");
 const chalk = require("chalk");
 const Discord = require(`discord.js`)
 const creds = require(`../client_secret.json`);
-const HAA = require(`../commands/hostAmongAss`)
+const HAA = require(`../commands/muteSync`)
 
 module.exports = {
     checkMuteDay,

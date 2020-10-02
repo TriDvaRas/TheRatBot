@@ -1,9 +1,14 @@
 const IO = require(`../functions/IO`);
 const logger = require("../logger");
+let fetch = require(`node-fetch`)
+
 module.exports = {
     blameRandom,
     getNewBlame
 }
+
+let Games = []
+getGameList()
 
 function blameRandom() {
     let subs = IO.Read(`./assets/subscribers.json`);
@@ -26,27 +31,32 @@ function getNewBlame() {
     let parts = IO.Read(`./assets/phraseParts.json`);
     let phrase = ""
     if (Math.random() < 0.45)
-        phrase += parts.prefix[Math.floor(Math.random() * parts.prefix.length)] + ` `;
+        phrase += parts.prefix[Math.floor(Math.random() * parts.prefix.length)] + `, `;
 
     phrase += parts.first[Math.floor(Math.random() * parts.first.length)] + ` `;
-    phrase += parts.second[Math.floor(Math.random() * parts.second.length)] + ` `;
+    phrase += parts.second[Math.floor(Math.random() * parts.second.length)] + `, `;
     let r = Math.random();
     let n;
-    if (r > 0.40) {
+    if (r > 0.40)
         n = 1;
-    } else if (r > 0.10) {
+    else if (r > 0.10)
         n = 2;
-    } else {
+    else
         n = 3;
-    }
     for (let i = 0; i < n; i++) {
         let third = parts.third[Math.floor(Math.random() * parts.third.length)]
             .replace("{n}", Math.floor(Math.random() * 7))
             .replace("{N}", Math.floor(Math.random() * 10000))
             .replace("{ava}", avaGenerator(parts))
             .replace("{first}", parts.first[Math.floor(Math.random() * parts.first.length)])
-            .replace("{second}", parts.second[Math.floor(Math.random() * parts.second.length)])
-            + ` `;
+            .replace("{second}", parts.second[Math.floor(Math.random() * parts.second.length)]);
+        if (i < n - 1)
+            third += `, `
+        else
+            third += ` `
+        if (third.includes(`{game}`)) {
+            third = third.replace(`{game}`, `${getGame()}`)
+        }
         phrase += third;
     }
     return phrase;
@@ -88,3 +98,22 @@ function addStats(User) {
     stats.auto += 1;
     IO.Write(`./blameStats.json`, stats)
 }
+function getGameList() {
+    fetch("http://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=STEAMKEY&format=json")
+        .then(res => res.json(),)
+        .then(json => {
+            Games = json.applist.apps.map(g => g.name)
+            logger.log(`info`, `Updated games list games: ${Games.length}`)
+            if (Games.length == 0)
+                setTimeout(getGameList, 300000)
+            else
+                setTimeout(getGameList, 3600000 * 24)
+
+        })
+}
+function getGame() {
+    if (Games.length == 0)
+        return `доту`
+    return Games[Math.floor(Math.random() * Games.length)]
+}
+

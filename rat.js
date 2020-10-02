@@ -53,7 +53,7 @@ client.on('message', message => {
 				.addField(`Blames`, blameStat.users.reduce((accumulator, currentValue) => accumulator + currentValue.blames, 0), true)
 				.addField(`Auto Blames`, blameStat.auto, true)
 				.addField(`Subs`, getSubStat(), true)
-				.addField(`**Main Blame Abuser**`, blameStat.users.reduce((prev, current) => (prev.blames > current.blames) ? prev : current).tag, false)
+				.addField(`**Main Blame Abuser**`, `${blameStat.users.reduce((prev, current) => (prev.blames > current.blames) ? prev : current).tag} (${blameStat.users.reduce((prev, current) => (prev.blames > current.blames) ? prev : current).blames})`, false)
 				.addField(`BlameParts`, getPartsStat(), true)
 				.setTimestamp()
 				.setFooter('Я КРЫСА', 'https://tdr.s-ul.eu/hP8HuUCR')
@@ -61,21 +61,18 @@ client.on('message', message => {
 			return;
 		}
 		if (lastMsgs[0]?.content == message.content) {
-			console.log(1);
 			let reCount = lastMsgs.filter(msg => msg.content == message.content && msg.author != message.author).length
 			lastMsgs.unshift({
 				content: message.content,
 				author: message.author.id
 			})
 			if (reCount >= 2) {
-				console.log(2);
 				message.channel.send(lastMsgs[0])
 				lastMsgs = [];
 			}
 
 		}
 		else {
-			console.log(3);
 			lastMsgs = [];
 			lastMsgs.unshift({
 				content: message.content,

@@ -7,7 +7,7 @@ module.exports = {
     getNewBlame
 }
 
-let Games = []
+globalThis.Games = []
 getGameList()
 
 function blameRandom() {

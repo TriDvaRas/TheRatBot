@@ -1,10 +1,13 @@
 //Setup
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('./config.json');
+let { prefix, token } = require('./config.json');
 const blame = require(`./functions/autoBlame`);
 const VH = require(`./functions/voiceHandler`);
-
+if (process.argv.includes(`test`)){
+	token = process.env.TEST_DISCORD_KEY
+	prefix = `\``
+}
 globalThis.client = new Discord.Client();
 
 const logger = require("./logger");

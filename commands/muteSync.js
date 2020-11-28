@@ -4,9 +4,10 @@ const Discord = require('discord.js');
 module.exports = {
     aliases: ['mutesync', 'ms'],
     description: 'Bind your current channel server mute to your selfmute',
-    help: '`hostaa`\n`hostaa -`',
+    help: '`ms`\n`ms -`',
     execute: async function (message, args) {
         if (![`-`, `d`].includes(args[0])) {
+            blackList
             host = message.member
             channel = message.member.voice.channel
             console.log(channel)
@@ -20,7 +21,7 @@ module.exports = {
             )
         }
         else {
-            
+            blackList = undefined
             host = undefined
             channel = undefined
             mutedMembers.forEach(member => {
@@ -30,6 +31,7 @@ module.exports = {
             message.channel.send(new Discord.MessageEmbed()
                 .setColor(`#DA1D5B`)
                 .setTitle(`MuteSync Deactivated`)
+                .setFooter(`Пизда отменяется`)
             )
         }
     },
@@ -60,4 +62,5 @@ module.exports = {
 };
 let host
 let channel
+let blackList
 let mutedMembers = new Map()

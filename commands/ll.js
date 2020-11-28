@@ -17,16 +17,15 @@ async function execute(message, args) {
     m.delete({ timeout: 3000 });
     if (message.member.voice.channel) {
         const connection = await message.member.voice.channel.join();
-        logger.log("cmd",`В ${connection.channel.guild}/${connection.channel.name} насрано`);
+        logger.log("cmd", `В ${connection.channel.guild}/${connection.channel.name} насрано`);
 
         const dispatcher = connection.play(getRandomPath(), {
             volume: 0.35,
             highWaterMark: 12,
         });
+        globalThis.voiceConnections.set(message.guild.id, { connection, dispatcher })
         dispatcher.on('finish', () => {
-            connection.disconnect();
-            dispatcher.destroy();
-            logger.log("cmd",`${connection.channel.guild}/${connection.channel.name}`);
+            connection.finishedAt = Date.now()
         });
     }
 }
@@ -38,9 +37,9 @@ function getRandomPath() {
     if (!Files[0])
         return './assets/sample.mp3';
     let id = Math.floor(Math.random() * Files.length);
-    logger.log("cmd",`Now Playing${id + 1}/${Files.length}`)
+    logger.log("cmd", `Now Playing${id + 1}/${Files.length}`)
     let file = Files[id];
-    logger.log("cmd",file);
+    logger.log("cmd", file);
     return file.path;
 }
 

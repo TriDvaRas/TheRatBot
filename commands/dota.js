@@ -21,7 +21,7 @@ module.exports = {
                     .setColor(`#56E54A`)
                     .setAuthor(`Search results `)
                     .setDescription(`${heroName}`)
-                    .setFooter(`${res.map(x=>x.text).join(`\n`)} `)
+                    .setFooter(`${res.map(x => x.text).join(`\n`)} `)
                 )
                 return
             }
@@ -38,19 +38,20 @@ module.exports = {
             else {
                 phr = hero.phrases[0]
             }
-            const connection = await message.member.voice.channel.join();
+            let connection = await message.member.voice.channel.join();
             const dispatcher = connection.play(phr.src, {
                 volume: +phr.vol,
             });
+
             message.channel.send(new MessageEmbed()
                 .setColor(`RED`)
                 .setAuthor(`${heroName} `)
                 .setDescription(`[All (${hero.count}) ${heroName} Responses](${hero.list})`)
                 .setFooter(`${phr.text} `)
             )
+            globalThis.voiceConnections.set(message.guild.id, { connection, dispatcher })
             dispatcher.on('finish', () => {
-                connection.disconnect();
-                dispatcher.destroy();
+                connection.finishedAt = Date.now()
             });
         }
     },

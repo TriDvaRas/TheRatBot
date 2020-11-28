@@ -10,15 +10,14 @@ module.exports = {
 async function execute(message, args) {
 	message.channel.send("░░░░░▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░\n░░░▓▓▓▓▓▓▒▒▒▒▒▒▓▓░░░░░░░\n░░▓▓▓▓▒░░▒▒▓▓▒▒▓▓▓▓░░░░░\n░▓▓▓▓▒░░▓▓▓▒▄▓░▒▄▄▄▓░░░░\n▓▓▓▓▓▒░░▒▀▀▀▀▒░▄░▄▒▓▓░░░\n▓▓▓▓▓▒░░▒▒▒▒▒▓▒▀▒▀▒▓▒▓░░\n▓▓▓▓▓▒▒░░░▒▒▒░░▄▀▀▀▄▓▒▓░\n▓▓▓▓▓▓▒▒░░░▒▒▓▀▄▄▄▄▓▒▒▒▓\n░▓█▀▄▒▓▒▒░░░▒▒░░▀▀▀▒▒▒▒░\n░░▓█▒▒▄▒▒▒▒▒▒▒░░▒▒▒▒▒▒▓░\n░░░▓▓▓▓▒▒▒▒▒▒▒▒░░░▒▒▒▓▓░\n░░░░░▓▓▒░░▒▒▒▒▒▒▒▒▒▒▒▓▓░\n░░░░░░▓▒▒░░░░▒▒▒▒▒▒▒▓▓░░");
 	if (message.member.voice.channel) {
-		const connection = await message.member.voice.channel.join();
-		logger.log('cmd',`A in ${connection.channel.guild}/${connection.channel.name}`);
+		let connection = await message.member.voice.channel.join();
+		logger.log('cmd', `A in ${connection.channel.guild}/${connection.channel.name}`);
 		const dispatcher = connection.play('./assets/a.mp3', {
 			volume: 0.5,
 		});
+		globalThis.voiceConnections.set(message.guild.id, { connection, dispatcher })
 		dispatcher.on('finish', () => {
-			logger.log('cmd',`Finished A in ${connection.channel.guild}/${connection.channel.name}`);
-			connection.disconnect();
-			dispatcher.destroy();
+			connection.finishedAt = Date.now()
 		});
 	}
 }

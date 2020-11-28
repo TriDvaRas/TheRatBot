@@ -12,9 +12,9 @@ async function execute(message, args) {
 		const dispatcher = connection.play('./assets/vgolovu.mp3', {
 			volume: 0.8,
 		});
+		globalThis.voiceConnections.set(message.guild.id, { connection, dispatcher })
 		dispatcher.on('finish', () => {
-			connection.disconnect();
-			dispatcher.destroy();
+			connection.finishedAt = Date.now()
 		});
 	}
 }

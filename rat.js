@@ -4,11 +4,23 @@ const Discord = require('discord.js');
 let { prefix, token } = require('./config.json');
 const blame = require(`./functions/autoBlame`);
 const VH = require(`./functions/voiceHandler`);
-if (process.argv.includes(`test`)){
+if (process.argv.includes(`test`)) {
 	token = process.env.RAT_DISCORD_KEY
 	prefix = `\``
 }
 globalThis.client = new Discord.Client();
+globalThis.voiceConnections = new Map()
+
+
+setInterval(() => {
+	globalThis.voiceConnections.forEach(({ connection, dispatcher }, key) => {
+		if (connection.finishedAt && Date.now() - connection.finishedAt > 10000) {
+			connection.disconnect()
+			dispatcher.destroy()
+			globalThis.voiceConnections.delete(key)
+		}
+	})
+}, 3000);
 
 const logger = require("./logger");
 const chalk = require("chalk");

@@ -5,7 +5,7 @@ let { prefix, token } = require('./config.json');
 const blame = require(`./functions/autoBlame`);
 const VH = require(`./functions/voiceHandler`);
 if (process.argv.includes(`test`)){
-	token = process.env.TEST_DISCORD_KEY
+	token = process.env.RAT_DISCORD_KEY
 	prefix = `\``
 }
 globalThis.client = new Discord.Client();
@@ -124,7 +124,7 @@ function getSubStat() {
 }
 //logger
 client.on('ready', () => {
-	logger.log('info', 'Logged in');
+	logger.log('info', `Logged in as ${client.user.tag}`);
 	//autoblame
 	if (!process.argv.includes(`test`))
 		setTimeout(blame.blameRandom, (Math.random() + 0.5) * 3 * 3600000);

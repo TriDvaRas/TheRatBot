@@ -14,13 +14,13 @@ globalThis.voiceConnections = new Map()
 
 setInterval(() => {
 	globalThis.voiceConnections.forEach(({ connection, dispatcher }, key) => {
-		if (connection.finishedAt && Date.now() - connection.finishedAt > 10000) {
+		if (connection.finishedAt && Date.now() - connection.finishedAt > 3600000) {
 			connection.disconnect()
 			dispatcher.destroy()
 			globalThis.voiceConnections.delete(key)
 		}
 	})
-}, 3000);
+}, 300000);
 
 const logger = require("./logger");
 const chalk = require("chalk");

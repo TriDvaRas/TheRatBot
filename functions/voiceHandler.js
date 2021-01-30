@@ -4,10 +4,29 @@ const chalk = require("chalk");
 const Discord = require(`discord.js`)
 const creds = require(`../client_secret.json`);
 const HAA = require(`../commands/muteSync`)
-
+const numToStr = require(`./numToStr`)
 module.exports = {
     checkMuteDay,
-    checkMuteAll
+    checkMuteAll,
+    checkNZ,
+}
+
+function checkNZ(oldState, newState) {
+    if (!global.nz)
+        return
+    let host = newState.guild.members.cache.get(`272084627794034688`)
+    let hostVS = host.voice
+    if (newState.channelID != hostVS.channelID && oldState.channelID != hostVS.channelID)
+        return
+    if (hostVS.channel)
+        host.setNickname(getNZName(hostVS.channel.members.size))
+}
+
+function getNZName(memCnt) {
+    if (memCnt == 1)
+        return `Я здесь один`
+    else
+        return `Нас здесь ${numToStr(memCnt)}`
 }
 
 function checkMuteAll(oldState, newState) {

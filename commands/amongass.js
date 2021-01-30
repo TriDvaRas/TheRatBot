@@ -58,7 +58,9 @@ function getTrait(imposter, used, traits) {
     } while (used.includes(imp) && i < 50);
 
     if (pla.includes(`{anekdot}`)) {
+        console.log(`!`);
         let a = getA()
+        console.log(a);
         pla = pla.replace(`{anekdot}`, `*${a}*`)
     }
     return [

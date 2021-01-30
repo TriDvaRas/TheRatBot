@@ -10,7 +10,7 @@ if (process.argv.includes(`test`)) {
 }
 globalThis.client = new Discord.Client();
 globalThis.voiceConnections = new Map()
-
+global.nz = true
 
 setInterval(() => {
 	globalThis.voiceConnections.forEach(({ connection, dispatcher }, key) => {
@@ -123,6 +123,7 @@ client.on('message', message => {
 client.on('voiceStateUpdate', (oldState, newState) => {
 	VH.checkMuteDay(oldState, newState)
 	VH.checkMuteAll(oldState, newState)
+	VH.checkNZ(oldState, newState)
 })
 
 function getPartsStat() {

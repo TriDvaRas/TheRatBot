@@ -24,7 +24,7 @@ function checkNZ(oldState, newState) {
         if (newState.channelID != hostVS.channelID && oldState.channelID != hostVS.channelID)
             continue
         if (!hostVS?.channel) {
-            host.setNick(getNZName(hostVS.channel.members.size))
+            host.setNickname(message.member.setNickname(mem.oldName))
             global.NZmems.splice(global.NZmems.indexOf(mem), 1)
             continue
         }

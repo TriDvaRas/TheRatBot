@@ -150,7 +150,9 @@ client.on('ready', () => {
 process
 	.on('uncaughtException', error => {
 		logger.log('error', `[*] ${error}`);
+		console.log(`[*] ${error}`);
 	})
 	.on('unhandledRejection', error => {
 		logger.log('error', `[*] ${error}`);
+		console.log(`[*] ${error}`);
 	})

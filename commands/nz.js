@@ -1,3 +1,4 @@
+const numToStr = require(`../functions/numToStr`)
 
 module.exports = {
 	aliases: ['nz'],
@@ -11,12 +12,23 @@ module.exports = {
 			message.reply(`-nz`)
 		}
 		else {
-			global.NZmems.push({
+			mem = {
 				id: message.author.id,
 				cnt: message.member?.voice?.channel?.members?.size,
 				oldName: message.member.nickname
-			})
+			}
+			global.NZmems.push(mem)
 			message.reply(`+nz`)
+
+			if (mem.cnt > 0)
+				message.member.setNickname(getNZName(mem.cnt))
 		}
 	},
 };
+
+function getNZName(memCnt) {
+	if (memCnt == 1)
+		return `Я здесь один`
+	else
+		return `Нас здесь ${numToStr(memCnt)}`
+}

@@ -21,17 +21,15 @@ function checkNZ(oldState, newState) {
     for (const mem of global.NZmems) {
         let host = newState.guild.members.cache.get(`${mem.id}`)
         let hostVS = host.voice
-        if (newState.channelID != hostVS.channelID && oldState.channelID != hostVS.channelID)
-            continue
         if (!hostVS?.channel) {
-            host.setNickname(message.member.setNickname(mem.oldName))
-            global.NZmems.splice(global.NZmems.indexOf(mem), 1)
+            host.setNickname(mem.oldName)
+            //global.NZmems.splice(global.NZmems.indexOf(mem), 1)
             continue
         }
-        if (mem.cnt == hostVS.channel.members.size)
-            continue
         mem.cnt = hostVS.channel.members.size
-        host.setNickname(getNZName(hostVS.channel.members.size))
+        let nick = getNZName(hostVS.channel.members.size)
+        if (nick != host.nickname)
+            host.setNickname(nick)
     }
 
 

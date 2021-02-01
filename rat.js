@@ -11,6 +11,7 @@ if (process.argv.includes(`test`)) {
 globalThis.client = new Discord.Client();
 globalThis.voiceConnections = new Map()
 global.nz = true
+global.NZmems = []
 
 setInterval(() => {
 	globalThis.voiceConnections.forEach(({ connection, dispatcher }, key) => {

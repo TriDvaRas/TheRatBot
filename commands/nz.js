@@ -4,9 +4,19 @@ module.exports = {
 	description: 'Нас здесь',
 	help: '`Нас здесь`',
 	execute: async function (message, args) {
-		if (newState.member.id != `272084627794034688`)
-			return;
-		message.delete();
-		global.nz = global.nz ? false : true
+		let mem = global.NZmems.find(x => x.id == message.author.id)
+		if (mem) {
+			message.member.setNickname(mem.oldName)
+			global.NZmems.splice(global.NZmems.indexOf(mem), 1)
+			message.reply(`-nz`)
+		}
+		else {
+			global.NZmems.push({
+				id: message.author.id,
+				cnt: message.member?.voice?.channel?.members?.size,
+				oldName: message.member.nickname
+			})
+			message.reply(`+nz`)
+		}
 	},
 };

@@ -20,6 +20,8 @@ function checkNZ(oldState, newState) {
 
     for (const mem of global.NZmems) {
         let host = newState.guild.members.cache.get(`${mem.id}`)
+        if (!host)
+            continue
         let hostVS = host.voice
         if (!hostVS?.channel) {
             host.setNickname(mem.oldName)

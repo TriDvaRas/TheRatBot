@@ -2,7 +2,7 @@ let osu = require(`../functions/osu`)
 module.exports = {
 	aliases: ['o', 'osu'],
 	description: 'osu!',
-	help: '`!o [args]`\nArgs:\n `.1` - номер скора в истории(начиная с последнего)\n `f` - показывать фейлы(не работает(пока?))\n `r` - подробные пипосы',
+	help: '`!o [args]`\nArgs:\n `.n` - номер скора в истории(начиная с последнего)\n `f` - показывать фейлы(не работает(пока?))\n `r` - подробные пипосы \nEx:\n `!o .2 r f`',
 	execute: async function (message, args) {
 		let lim = 1
 		let offArg = args.find(a => a.startsWith(`.`))

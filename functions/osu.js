@@ -54,6 +54,22 @@ function getRecents(userId, options) {
     })
 }
 
+function getUser(userId, options) {
+    return new Promise((resolve, reject) => {
+        getToken().then(token => {
+            headers.Authorization = `Bearer ${token}`
+            fetch(`https://osu.ppy.sh/api/v2/users/${userId}`, {
+                method: "GET",
+                headers,
+            })
+                .then(response => response.json())
+                .then(resolve)
+                .catch(reject)
+        })
+
+    })
+}
+
 function getFullBeatmap(beatmapId) {
     return new Promise((resolve, reject) => {
         fetch(`https://osu.ppy.sh/api/get_beatmaps?b=${beatmapId}&k=${osuTokenV1}`, {
@@ -66,8 +82,9 @@ function getFullBeatmap(beatmapId) {
     })
 }
 
-function formatScore(score, beatmap, pp) {
-    return new Discord.MessageEmbed()
+function formatScore(score, beatmap, pp, options) {
+    let { rich } = options
+    let embeed = new Discord.MessageEmbed()
         .setAuthor(`${score.user.username}`, `${score.user.avatar_url}`, `https://osu.ppy.sh/users/${score.user_id}`)
         .setThumbnail(`${score.beatmapset.covers[`list@2x`]}`)
         .setDescription(`**[${beatmap.artist} - ${beatmap.title} [${beatmap.version}]](${score.beatmap.url})**`)
@@ -79,9 +96,11 @@ function formatScore(score, beatmap, pp) {
         .addField(`Real pp`, `**${Math.round(score.pp * 100) / 100}pp**` || `-`, true)
         .addField(`Aprox pp`, pp.sum || `-`, true)
         .addField(`Hits`, `${score.statistics.count_300} / ${score.statistics.count_100} / ${score.statistics.count_50} / ${score.statistics.count_miss}`, true)
-        .addField(`Aim pp`, pp.aim, true)
-        .addField(`Speed pp`, pp.speed, true)
-        .addField(`Acc pp`, pp.acc, true)
+    if (rich)
+        embeed.addField(`Aim pp`, pp.aim, true)
+            .addField(`Speed pp`, pp.speed, true)
+            .addField(`Acc pp`, pp.acc, true)
+    return embeed
 }
 
 
@@ -132,4 +151,5 @@ module.exports = {
     formatScore,
     getFullBeatmap,
     getPP,
+    getUser,
 }

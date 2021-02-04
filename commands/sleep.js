@@ -5,6 +5,7 @@ module.exports = {
 	aliases: [`sl'`, `sleep`],
 	description: 'sleep',
 	help: '`sleep`',
+	spam: true,
 	execute,
 };
 async function execute(message, args) {

@@ -7,6 +7,7 @@ module.exports = {
     aliases: [`d`, 'dota'],
     description: 'Dota hero responses',
     help: '`dota [hero_name] [phrase part]`\n`dota [hero_name] *` \n`dota * *`',
+	spam: true,
     execute: async function (message, args) {
         if (message.member.voice.channel) {
             let heroName

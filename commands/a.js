@@ -5,6 +5,7 @@ module.exports = {
 	aliases: ['a'],
 	description: 'AAAAAAAAAAA',
 	help: '`a`',
+	spam: true,
 	execute,
 };
 async function execute(message, args) {

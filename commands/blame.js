@@ -6,6 +6,7 @@ module.exports = {
     aliases: ['blame', `bl`, `b`],
     description: 'Blame me!',
     help: '`blame`',
+	spam: true,
     execute: function (message, args) {
         if (checkCD(message.author)) {
             message.delete({ timeout: 5000 })

@@ -4,6 +4,7 @@ const chalk = require("chalk");
 module.exports = {
 	aliases: ['aaa', `ааа`],
 	execute,
+	spam: true,
 };
 async function execute(message, args) {
 	if (message.member.voice.channel) {

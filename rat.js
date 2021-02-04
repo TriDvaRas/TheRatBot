@@ -52,9 +52,10 @@ let lastMsgs = [];
 client.on('message', message => {
 	if (message.author.bot) return;
 	if (message.guild == null) return message.channel.send("пошел нахуй");
-	if (message.guild.name == "Future Foundation" && message.channel.name != "spam") return;
+	
 	client.replies.each((reply, key) => {
 		if (message.content.toLowerCase().includes(key)) {
+			if (reply.spam && message.guild.name == "Future Foundation" && message.channel.name != "spam") return;
 			reply.execute(message);
 		}
 	})

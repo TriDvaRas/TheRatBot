@@ -2,6 +2,7 @@ const { indexOf } = require("ffmpeg-static");
 
 module.exports = {
     aliases: ['лайков', `likes`],
+	spam: true,
     execute: async function (message, args) {
         let msg = message.content.split(/ +/);
         let aliasIndex = msg.indexOf(`лайков`);

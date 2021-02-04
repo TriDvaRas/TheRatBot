@@ -4,6 +4,7 @@ module.exports = {
 	aliases: ['nz'],
 	description: 'Нас здесь',
 	help: '`Нас здесь`',
+	spam: true,
 	execute: async function (message, args) {
 		let mem = global.NZmems.find(x => x.id == message.author.id)
 		if (mem) {

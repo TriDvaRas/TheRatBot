@@ -5,6 +5,7 @@ module.exports = {
     aliases: ['mutesync', 'ms'],
     description: 'Bind your current channel server mute to your selfmute',
     help: '`hostaa`\n`hostaa -`',
+	spam: true,
     execute: async function (message, args) {
         if (![`-`, `d`].includes(args[0])) {
             host = message.member

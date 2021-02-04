@@ -3,6 +3,7 @@ const logger = require("../logger");
 const chalk = require("chalk");
 module.exports = {
 	aliases: ['в голову', `вголову`, `v golovu`, `vgolovu`, `v golovy`, `vgolovy`],
+	spam: true,
 	execute,
 };
 async function execute(message, args) {

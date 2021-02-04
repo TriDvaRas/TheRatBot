@@ -84,6 +84,8 @@ function formatScore(score, beatmap, pp, options) {
     let embeed = new Discord.MessageEmbed()
         .setAuthor(`${score.user.username}`, `${score.user.avatar_url}`, `https://osu.ppy.sh/users/${score.user_id}`)
         // .setThumbnail(`${score.beatmapset.covers[`list@2x`]}`)
+        .setColor(getColor(score.rank))
+
         .setDescription(`**[${beatmap.artist} - ${beatmap.title} [${beatmap.version}]](${score.beatmap.url})**`)
         .setImage(`${score.beatmapset.covers[`cover@2x`]}`)
         .addField(`Acc`, `${Math.round(score.accuracy * 10000) / 100}%`, true)
@@ -98,12 +100,37 @@ function formatScore(score, beatmap, pp, options) {
             .addField(`Speed pp`, pp.speed, true)
             .addField(`Acc pp`, pp.acc, true)
     embeed.addField(`Beatmap Info`, getBeatmapInfo(score, beatmap))
-    
+
     return embeed
 }
 
+function getColor(rank) {
+    switch (rank) {
+        case `SSH`:
+            return `#F0BB18`
+        case `SS`:
+            return `#F0BB18`
+        case `SH`:
+            return `#E9D422`
+        case `S`:
+            return `#E9D422`
+        case `A`:
+            return `#1BE016`
+        case `B`:
+            return `#164AE0`
+        case `C`:
+            return `#CD0DD4`
+        case `D`:
+            return `#D40D16`
+        case `F`:
+            return `#682D09`
+        default:
+            break;
+    }
+}
+
 function getBeatmapInfo(score, beatmap) {
-    return `Length: \`${Math.floor(score.beatmap.hit_length / 60)}:${score.beatmap.hit_length % 60} (${Math.floor(score.beatmap.total_length / 60)}:${score.beatmap.total_length % 60})\`   BPM: \`${score.beatmap.bpm}\`  Objects: \`${score.beatmap.count_circles + score.beatmap.count_sliders + score.beatmap.count_spinners}\`\n` +
+    return `Length: \`${Math.floor(score.beatmap.hit_length / 60)}:${score.beatmap.hit_length % 60 > 9 ? score.beatmap.hit_length % 60 : `0${score.beatmap.hit_length % 60}`} (${Math.floor(score.beatmap.total_length / 60)}:${score.beatmap.total_length % 60 > 9 ? score.beatmap.total_length % 60 : `0${score.beatmap.total_length % 60}`})\`   BPM: \`${score.beatmap.bpm}\`  Objects: \`${score.beatmap.count_circles + score.beatmap.count_sliders + score.beatmap.count_spinners}\`\n` +
         `CS: \`${score.beatmap.cs}\`  AR: \`${score.beatmap.ar}\`  OD: \`${score.beatmap.accuracy}\`  HP: \`${score.beatmap.drain}\`  Stars: \`${score.beatmap.difficulty_rating}\`  `
 }
 

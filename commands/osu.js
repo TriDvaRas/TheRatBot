@@ -4,11 +4,13 @@ module.exports = {
 	aliases: ['o', 'osu'],
 	description: 'osu!',
 	help: '`Bind account:\n`!o b <osu Username>`\nRecent scores:\n!o [args]`\nArgs:\n `.n` - номер скора в истории(начиная с последнего)\n `f` - показывать фейлы(не работает(пока?))\n `r` - подробные пипосы \nEx:\n `!o .2 r f`',
+	spam: true,
 	execute: async function (message, args) {
 		if (args[0] == `b`) {
 			if (!args[1])
 				return message.channel.send(`Сука (ник где, еблан?)`)
-			osu.getV1User(args[1]).then(user => {
+			args.shift()
+			osu.getV1User(args.join(` `)).then(user => {
 				if (!user) return message.channel.send(`Сука (нет такого)`)
 				let userStates = readUsers()
 				let userState = userStates.find(x => x.discordId == message.author.id)
@@ -21,7 +23,8 @@ module.exports = {
 						discordId: message.author.id
 					});
 				}
-				writeUsers(userState)
+				writeUsers(userStates)
+				message.channel.send(`Привязал`)
 			})
 		}
 		else {

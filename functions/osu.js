@@ -54,23 +54,19 @@ function getRecents(userId, options) {
     })
 }
 
-function getUser(userId, options) {
+function getV1User(userName) {
     return new Promise((resolve, reject) => {
-        getToken().then(token => {
-            headers.Authorization = `Bearer ${token}`
-            fetch(`https://osu.ppy.sh/api/v2/users/${userId}`, {
-                method: "GET",
-                headers,
-            })
-                .then(response => response.json())
-                .then(resolve)
-                .catch(reject)
+        fetch(`https://osu.ppy.sh/api/get_user?u=${userName}&k=${osuTokenV1}`, {
+            method: 'get',
+            headers
         })
-
+            .then(response => response.json())
+            .then(json => resolve(json[0]))
+            .catch(reject)
     })
 }
 
-function getFullBeatmap(beatmapId) {
+function getV1Beatmap(beatmapId) {
     return new Promise((resolve, reject) => {
         fetch(`https://osu.ppy.sh/api/get_beatmaps?b=${beatmapId}&k=${osuTokenV1}`, {
             method: 'get',
@@ -84,25 +80,32 @@ function getFullBeatmap(beatmapId) {
 
 function formatScore(score, beatmap, pp, options) {
     let { rich } = options
+    //console.log(score);
     let embeed = new Discord.MessageEmbed()
         .setAuthor(`${score.user.username}`, `${score.user.avatar_url}`, `https://osu.ppy.sh/users/${score.user_id}`)
-        .setThumbnail(`${score.beatmapset.covers[`list@2x`]}`)
+        // .setThumbnail(`${score.beatmapset.covers[`list@2x`]}`)
         .setDescription(`**[${beatmap.artist} - ${beatmap.title} [${beatmap.version}]](${score.beatmap.url})**`)
         .setImage(`${score.beatmapset.covers[`cover@2x`]}`)
-        .addField(`Beatmap Info`, `TODO`)
-        .addField(`Combo`, `${score.max_combo}x/${beatmap.max_combo}x`, true)
         .addField(`Acc`, `${Math.round(score.accuracy * 10000) / 100}%`, true)
-        .addField(`Mods`, `${score.mods?.length == 0 ? `nomod` : `${score.mods.join(``)}`}`, true)
+        .addField(`Combo`, `${score.max_combo}x/${beatmap.max_combo}x`, true)
+        .addField(`Score`, `${score.score}`, true)
         .addField(`Real pp`, `**${Math.round(score.pp * 100) / 100}pp**` || `-`, true)
         .addField(`Aprox pp`, pp.sum || `-`, true)
-        .addField(`Hits`, `${score.statistics.count_300} / ${score.statistics.count_100} / ${score.statistics.count_50} / ${score.statistics.count_miss}`, true)
+        .addField(`Mods`, `${score.mods?.length == 0 ? `nomod` : `${score.mods.join(``)}`}`, true)
+        .addField(`Hits`, `${score.statistics.count_300} / ${score.statistics.count_100} / ${score.statistics.count_50} / ${score.statistics.count_miss}`, false)
     if (rich)
         embeed.addField(`Aim pp`, pp.aim, true)
             .addField(`Speed pp`, pp.speed, true)
             .addField(`Acc pp`, pp.acc, true)
+    embeed.addField(`Beatmap Info`, getBeatmapInfo(score, beatmap))
+    
     return embeed
 }
 
+function getBeatmapInfo(score, beatmap) {
+    return `Length: \`${Math.floor(score.beatmap.hit_length / 60)}:${score.beatmap.hit_length % 60} (${Math.floor(score.beatmap.total_length / 60)}:${score.beatmap.total_length % 60})\`   BPM: \`${score.beatmap.bpm}\`  Objects: \`${score.beatmap.count_circles + score.beatmap.count_sliders + score.beatmap.count_spinners}\`\n` +
+        `CS: \`${score.beatmap.cs}\`  AR: \`${score.beatmap.ar}\`  OD: \`${score.beatmap.accuracy}\`  HP: \`${score.beatmap.drain}\`  Stars: \`${score.beatmap.difficulty_rating}\`  `
+}
 
 function getPP(score, beatmap) {
     return new Promise((resolve, reject) => {
@@ -149,7 +152,7 @@ function getPP(score, beatmap) {
 module.exports = {
     getRecents,
     formatScore,
-    getFullBeatmap,
+    getV1Beatmap,
     getPP,
-    getUser,
+    getV1User,
 }

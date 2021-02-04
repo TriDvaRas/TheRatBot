@@ -60,7 +60,7 @@ function getTrait(imposter, used, traits) {
     if (pla.includes(`{anekdot}`)) {
         console.log(`!`);
         let a = getA()
-        console.log(a);
+        //console.log(a);
         pla = pla.replace(`{anekdot}`, `*${a}*`)
     }
     return [

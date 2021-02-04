@@ -10,7 +10,7 @@ module.exports = {
         if (![`-`, `d`].includes(args[0])) {
             host = message.member
             channel = message.member.voice.channel
-            console.log(channel)
+            //console.log(channel)
             message.channel.send(new Discord.MessageEmbed()
                 .setTitle(`MuteSync Activated`)
                 .setColor(`#A7DA1D`)

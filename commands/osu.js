@@ -20,7 +20,12 @@ module.exports = {
 				else {
 					userStates.push({
 						osuId: user.user_id,
-						discordId: message.author.id
+						discordId: message.author.id,
+						pp: +user.pp_raw,
+						acc: +user.accuracy,
+						rank: +user.pp_rank,
+						rankReal: +user.pp_rank,
+						playCount: +user.playcount,
 					});
 				}
 				writeUsers(userStates)

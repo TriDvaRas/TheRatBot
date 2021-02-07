@@ -2,7 +2,8 @@ let fetch = require(`node-fetch`)
 let { osuToken, osuTokenV1 } = require(`../config.json`)
 let ojsama = require("ojsama");
 let Discord = require(`discord.js`);
-const { response } = require("express");
+let fs = require("fs")
+
 let auth = null
 let headers = {
     "Accept": "application/json",
@@ -54,6 +55,37 @@ function getRecents(userId, options) {
     })
 }
 
+function getUser(userId, options) {
+    return new Promise((resolve, reject) => {
+        getToken().then(token => {
+            headers.Authorization = `Bearer ${token}`
+            fetch(`https://osu.ppy.sh/api/v2/users/${userId}`, {
+                method: "GET",
+                headers,
+            })
+                .then(response => response.json())
+                .then(resolve)
+                .catch(reject)
+        })
+
+    })
+}
+//laser waiting room
+// function getUsers(userIds, options) {
+//     return new Promise((resolve, reject) => {
+//         getToken().then(token => {
+//             headers.Authorization = `Bearer ${token}`
+//             fetch(`https://osu.ppy.sh/api/v2/users/${userIds.join(`,`)}`, {
+//                 method: "GET",
+//                 headers,
+//             })
+//                 .then(response => response.json())
+//                 .then(resolve)
+//                 .catch(reject)
+//         })
+
+//     })
+// }
 function getV1User(userName) {
     return new Promise((resolve, reject) => {
         fetch(`https://osu.ppy.sh/api/get_user?u=${userName}&k=${osuTokenV1}`, {
@@ -79,7 +111,7 @@ function getV1Beatmap(beatmapId) {
 }
 
 function formatScore(score, beatmap, pp, options) {
-    let { rich } = options
+    let { rich, delta, stats } = options
     //console.log(score);
     let embeed = new Discord.MessageEmbed()
         .setAuthor(`${score.user.username}`, `${score.user.avatar_url}`, `https://osu.ppy.sh/users/${score.user_id}`)
@@ -88,17 +120,25 @@ function formatScore(score, beatmap, pp, options) {
 
         .setDescription(`**[${beatmap.artist} - ${beatmap.title} [${beatmap.version}]](${score.beatmap.url})**`)
         .setImage(`${score.beatmapset.covers[`cover@2x`]}`)
-        .addField(`Acc`, `${Math.round(score.accuracy * 10000) / 100}%`, true)
+
+    if (delta)
+        embeed.addField(`Player Stats`, `pp\nRank\nAccuracy\nPlay Count`, true)
+            .addField(`Value`, `${stats.pp}pp\n#${stats.rank}\n${Math.round(stats.acc * 100) / 100}%\n${stats.playCount}`, true)
+            .addField(`Delta`, `${delta.pp < 0 ? `` : `+`}${delta.pp}pp\n${delta.rank < 0 ? `-` : `+`}#${Math.abs(delta.rank)}\n${delta.acc < 0 ? `` : `+`}${Math.round(delta.acc * 100) / 100}%\n${delta.playCount < 0 ? `` : `+`}${delta.playCount}`, true)
+
+    embeed.addField(`Acc`, `${Math.round(score.accuracy * 10000) / 100}%`, true)
         .addField(`Combo`, `${score.max_combo}x/${beatmap.max_combo}x`, true)
         .addField(`Score`, `${score.score}`, true)
         .addField(`Real pp`, `**${Math.round(score.pp * 100) / 100}pp**` || `-`, true)
         .addField(`Aprox pp`, pp.sum || `-`, true)
         .addField(`Mods`, `${score.mods?.length == 0 ? `nomod` : `${score.mods.join(``)}`}`, true)
         .addField(`Hits`, `${score.statistics.count_300} / ${score.statistics.count_100} / ${score.statistics.count_50} / ${score.statistics.count_miss}`, false)
+
     if (rich)
         embeed.addField(`Aim pp`, pp.aim, true)
             .addField(`Speed pp`, pp.speed, true)
             .addField(`Acc pp`, pp.acc, true)
+
     embeed.addField(`Beatmap Info`, getBeatmapInfo(score, beatmap))
 
     return embeed
@@ -176,10 +216,67 @@ function getPP(score, beatmap) {
     })
 }
 
+function checkNewScores(userState) {
+    return new Promise((resolve, reject) => {
+        getUser(userState.osuId).then(user => {
+            if (user.statistics.pp != userState.pp || user.statistics.hit_accuracy != userState.acc) {
+                getRecents(user.id, { lim: 1, off: 0, fail: false }).then(scores => {
+                    getV1Beatmap(scores[0].beatmap.id).then(beatmap => {
+                        getPP(scores[0], beatmap).then(pp => {
+                            let stats = {
+                                rankReal: user.statistics.pp_rank,
+                                rank: user.statistics.pp_rank,
+                                pp: user.statistics.pp,
+                                acc: user.statistics.hit_accuracy,
+                                playCount: user.statistics.play_count,
+                            }
+                            let delta = {
+                                rankReal: user.statistics.pp_rank - userState.rankReal,
+                                rank: userState.rank - user.statistics.pp_rank,
+                                pp: user.statistics.pp - userState.pp,
+                                acc: user.statistics.hit_accuracy - userState.acc,
+                                playCount: user.statistics.play_count - userState.playCount,
+                            }
+                            globalThis.client
+                                .guilds.cache.array().find(x => x.name == `3425`)//
+                                .channels.cache.array().find(x => x.name == `civ`)
+                                .send(formatScore(scores[0], beatmap, pp, { delta, stats }));
+                            userState.rankReal = user.statistics.pp_rank
+                            userState.rank = user.statistics.pp_rank
+                            userState.pp = user.statistics.pp
+                            userState.acc = user.statistics.hit_accuracy
+                            userState.playCount = user.statistics.play_count
+                            resolve()
+                        })
+                    })
+                })
+            }
+            else {
+                userState.rankReal = user.statistics.pp_rank
+                resolve()
+            }
+        })
+    })
+
+}
+
+function checkForNewScores() {
+    let Users = JSON.parse(fs.readFileSync(`./assets/osuUsers.json`))
+    let Tasks = []
+    Users.forEach(user => {
+        Tasks.push(checkNewScores(user))
+    })
+    Promise.all(Tasks).then(() => {
+        fs.writeFileSync(`./assets/osuUsers.json`, JSON.stringify(Users))
+    })
+}
+
 module.exports = {
     getRecents,
     formatScore,
     getV1Beatmap,
     getPP,
     getV1User,
+    getUser,
+    checkForNewScores,
 }

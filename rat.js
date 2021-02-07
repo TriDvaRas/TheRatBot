@@ -4,6 +4,9 @@ const Discord = require('discord.js');
 let { prefix, token } = require('./config.json');
 const blame = require(`./functions/autoBlame`);
 const VH = require(`./functions/voiceHandler`);
+let { checkForNewScores } = require(`./functions/osu`)
+const cron = require('node-cron');
+
 if (process.argv.includes(`test`)) {
 	token = process.env.RAT_DISCORD_KEY
 	prefix = `\``
@@ -52,7 +55,7 @@ let lastMsgs = [];
 client.on('message', message => {
 	if (message.author.bot) return;
 	if (message.guild == null) return message.channel.send("пошел нахуй");
-	
+
 	client.replies.each((reply, key) => {
 		if (message.content.toLowerCase().includes(key)) {
 			if (reply.spam && message.guild.name == "Future Foundation" && message.channel.name != "spam") return;
@@ -143,6 +146,10 @@ client.on('ready', () => {
 	//autoblame
 	if (!process.argv.includes(`test`))
 		setTimeout(blame.blameRandom, (Math.random() + 0.5) * 3 * 3600000);
+
+	cron.schedule('*/30 * * * * *', () => {
+		checkForNewScores()
+	})
 })
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
 	.on('warn', m => logger.log('warn', `[*] ${m}`))

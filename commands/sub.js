@@ -3,7 +3,7 @@ module.exports = {
 	aliases: ['sub', 'subscribe'],
 	description: 'Sub to PewDiePie!',
 	help: 'subscribe',
-	spam: true,
+	channelName: `spam`,
 	execute: function (message, args) {
 		let arr = IO.Read(`./assets/subscribers.json`);
 		if (!arr.includes(message.author.id)) {

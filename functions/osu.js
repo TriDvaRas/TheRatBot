@@ -51,7 +51,6 @@ function getRecents(userId, options) {
                 .then(resolve)
                 .catch(reject)
         })
-
     })
 }
 
@@ -237,15 +236,22 @@ function checkNewScores(userState) {
                                 acc: user.statistics.hit_accuracy - userState.acc,
                                 playCount: user.statistics.play_count - userState.playCount,
                             }
+                            let embed = formatScore(scores[0], beatmap, pp, { delta, stats })
                             globalThis.client
                                 .guilds.cache.array().find(x => x.name == `3425`)//
                                 .channels.cache.array().find(x => x.name == `civ`)
-                                .send(formatScore(scores[0], beatmap, pp, { delta, stats }));
+                                .send(embed);
+                            if (Math.abs(delta.pp) >= 1) {
+                                globalThis.client
+                                    .guilds.cache.array().find(x => x.name == `Future Foundation`)//
+                                    .channels.cache.array().find(x => x.name == `osu`)
+                                    .send(embed);
+                                userState.rank = user.statistics.pp_rank
+                                userState.playCount = user.statistics.play_count
+                            }
                             userState.rankReal = user.statistics.pp_rank
-                            userState.rank = user.statistics.pp_rank
                             userState.pp = user.statistics.pp
                             userState.acc = user.statistics.hit_accuracy
-                            userState.playCount = user.statistics.play_count
                             resolve()
                         })
                     })

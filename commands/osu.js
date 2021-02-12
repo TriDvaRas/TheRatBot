@@ -4,7 +4,7 @@ module.exports = {
 	aliases: ['o', 'osu'],
 	description: 'osu!',
 	help: '`Bind account:\n`!o b <osu Username>`\nRecent scores:\n!o [args]`\nArgs:\n `.n` - номер скора в истории(начиная с последнего)\n `f` - показывать фейлы(не работает(пока?))\n `r` - подробные пипосы \nEx:\n `!o .2 r f`',
-	spam: true,
+	channelName: `osu`,
 	execute: async function (message, args) {
 		if (args[0] == `b`) {
 			if (!args[1])

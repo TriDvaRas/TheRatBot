@@ -114,11 +114,14 @@ client.on('message', message => {
 	//CommandExec
 	try {
 		logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
-
+		let cmd = client.commands.get(command)
+		if (message.guild.name == "Future Foundation"
+			&& cmd.channelName
+			&& cmd.channelName != message.channel.name) return message.reply(`Тут нельзя срать иди нахуй`).then(m => m.delete({ timeout: 5000 }).then(()=>message.delete()));
 		if (args[0] == "help") {
-			message.channel.send(`${client.commands.get(command).description}\nUsage:\n${client.commands.get(command).help}`)
+			message.channel.send(`${cmd.description}\nUsage:\n${cmd.help}`)
 		} else
-			client.commands.get(command).execute(message, args);
+			cmd.execute(message, args);
 	} catch (error) {
 		logger.log('error', "" + error);
 		message.reply('Ты еблан?');

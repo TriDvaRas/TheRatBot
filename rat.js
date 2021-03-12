@@ -147,8 +147,8 @@ function getSubStat() {
 client.on('ready', () => {
 	logger.log('info', `Logged in as ${client.user.tag}`);
 	//autoblame
-	if (!process.argv.includes(`test`))
-		setTimeout(blame.blameRandom, (Math.random() + 0.5) * 3 * 3600000);
+	// if (!process.argv.includes(`test`))
+	// 	 setTimeout(blame.blameRandom, (Math.random() + 0.5) * 3 * 3600000);
 
 	cron.schedule('*/30 * * * * *', () => {
 		checkForNewScores()

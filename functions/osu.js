@@ -238,8 +238,8 @@ function checkNewScores(userState) {
                             }
                             let embed = formatScore(scores[0], beatmap, pp, { delta, stats })
                             globalThis.client
-                                .guilds.cache.array().find(x => x.name == `3425`)//
-                                .channels.cache.array().find(x => x.name == `civ`)
+                                .guilds.cache.array().find(x => x.name == `Крысиная Нора`)//
+                                .channels.cache.array().find(x => x.name == `osu-log`)
                                 .send(embed);
                             if (Math.abs(delta.pp) >= 1) {
                                 globalThis.client

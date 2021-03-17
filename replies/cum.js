@@ -17,7 +17,7 @@ async function execute(message, args) {
 		setTimeout(()=>{
 			dispatcher.pause()
 			connection.finishedAt = Date.now()
-		},2500+6000*Math.random())
+		},900+6000*Math.random())
 		globalThis.voiceConnections.set(message.guild.id, { connection, dispatcher })
 		dispatcher.on('finish', () => {
 			connection.finishedAt = Date.now()

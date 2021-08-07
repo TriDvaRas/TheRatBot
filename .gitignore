@@ -11,3 +11,4 @@ assets/phrasePartsOld.json
 blameStats.json
 test.js
 assets/osuUsers.json
+.vscode/launch.json

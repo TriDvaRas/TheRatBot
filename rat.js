@@ -6,7 +6,6 @@ const blame = require(`./functions/autoBlame`);
 const VH = require(`./functions/voiceHandler`);
 let { checkForNewScores } = require(`./functions/osu`)
 const cron = require('node-cron');
-
 if (process.argv.includes(`test`)) {
 	token = process.env.RAT_DISCORD_KEY
 	prefix = `\``
@@ -50,10 +49,21 @@ for (const file of replyFiles) {
 
 client.login(token);
 
-
+function mem() {
+    let str = `\u200B`
+    const used = process.memoryUsage();
+    for (let key in used) {
+        if (Object.prototype.hasOwnProperty.call(used, key)) {
+            str += `${Math.round(used[key] / 1024 / 1024 * 100) / 100}MB ${key} \t\n`
+        }
+    }
+    return str
+}
 let lastMsgs = [];
 client.on('message', message => {
 	if (message.author.bot) return;
+	if (message.content=='as') return heapdump.writeSnapshot()
+	if (message.content=='asa') return message.channel.send(mem())
 	if (message.guild == null) return message.channel.send("пошел нахуй");
 
 	client.replies.each((reply, key) => {

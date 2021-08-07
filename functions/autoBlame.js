@@ -99,17 +99,18 @@ function addStats(User) {
     IO.Write(`./blameStats.json`, stats)
 }
 function getGameList() {
-    fetch("http://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=STEAMKEY&format=json")
-        .then(res => res.json(),)
-        .then(json => {
-            Games = json.applist.apps.map(g => g.name)
-            logger.log(`info`, `Updated games list games: ${Games.length}`)
-            if (Games.length == 0)
-                setTimeout(getGameList, 300000)
-            else
-                setTimeout(getGameList, 3600000 * 24)
+    Games = [`[spisok igor ]`]
+    // fetch("http://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=STEAMKEY&format=json")
+    //     .then(res => res.json(),)
+    //     .then(json => {
+    //         Games = json.applist.apps.map(g => g.name)
+    //         logger.log(`info`, `Updated games list games: ${Games.length}`)
+    //         if (Games.length == 0)
+    //             setTimeout(getGameList, 300000)
+    //         else
+    //             setTimeout(getGameList, 3600000 * 24)
 
-        })
+    //     })
 }
 function getGame() {
     if (Games.length == 0)

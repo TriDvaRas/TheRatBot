@@ -1,8 +1,8 @@
 
 module.exports = {
-	name: 'invite',
+	aliases: ['invite'],
 	description: 'Gives bot invite link',
-	help: '`!invite`',
+	help: '`invite`',
 	execute:async function(message, args) {
         const { invite } = require('../config.json');
 		message.channel.send(invite);

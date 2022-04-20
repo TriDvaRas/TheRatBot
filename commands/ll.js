@@ -1,8 +1,11 @@
 const fs = require("fs");
+const logger = require("../logger");
+const chalk = require("chalk");
 module.exports = {
-    name: 'll',
+    aliases: ['ll'],
     description: 'LoveLive',
-    help: '`!ll` to die',
+    help: '`ll` to die',
+	channelName: `spam`,
     execute,
 };
 async function execute(message, args) {
@@ -10,21 +13,20 @@ async function execute(message, args) {
     if (message.author.id == 272091734429663237)
         return;
     let m = await message.channel.send({
-        files: ['./commands/assets/ll.png']
+        files: ['./assets/ll.png']
     })
     m.delete({ timeout: 3000 });
     if (message.member.voice.channel) {
         const connection = await message.member.voice.channel.join();
-        console.log(`В ${connection.channel.guild}/${connection.channel.name} насрано`);
+        logger.log("cmd", `В ${connection.channel.guild}/${connection.channel.name} насрано`);
 
         const dispatcher = connection.play(getRandomPath(), {
             volume: 0.35,
             highWaterMark: 12,
         });
+        globalThis.voiceConnections.set(message.guild.id, { connection, dispatcher })
         dispatcher.on('finish', () => {
-            connection.disconnect();
-            dispatcher.destroy();
-            console.log(`${connection.channel.guild}/${connection.channel.name}`);
+            connection.finishedAt = Date.now()
         });
     }
 }
@@ -34,11 +36,11 @@ function getRandomPath() {
 
     let Files = getFiles(llPath);
     if (!Files[0])
-        return './commands/assets/sample.mp3';
+        return './assets/sample.mp3';
     let id = Math.floor(Math.random() * Files.length);
-    console.log(`Now Playing${id + 1}/${Files.length}`)
+    logger.log("cmd", `Now Playing${id + 1}/${Files.length}`)
     let file = Files[id];
-    console.log(file);
+    logger.log("cmd", file);
     return file.path;
 }
 
@@ -55,7 +57,7 @@ function getFiles(path) {
     fileList.forEach(file => {
         Files.push({
             path: `${path}/${file}`,
-            name: file.replace(`.mp3`, ``).replace(`.flac`, ``)
+            aliases: file.replace(`.mp3`, ``).replace(`.flac`, ``)
         })
     });
     //add files from folders

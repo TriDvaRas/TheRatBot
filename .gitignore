@@ -6,3 +6,8 @@ commands/CivRandomizer/Imgs/Players/*
 commands/CivRandomizer/CurrentState.json
 old
 commands/f.js
+logs/*
+**secret**
+blameStats.json
+ratE.log
+ratO.log

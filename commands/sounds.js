@@ -16,7 +16,7 @@ async function execute(message, args) {
     message.channel.send(
         new Discord.MessageEmbed()
             .setColor('#db00d0')
-            .setDescription("**[Rat Sounds List](https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32Wh0zG4DJ76zQFffqH58OaXS1tdSDmwBuOfTGqbe1TFsGWSGhTEmdr0fuIVC-Jh5Te_gi9AYAvas/pubhtml?gid=518097663&single=true)**")
+            .setDescription("**[Rat Sounds List](https://github.com/TriDvaRas/TheRatBot/tree/UA/sounds)**")
             .setTimestamp()
             .setFooter('<-- rat', 'https://tdr.s-ul.eu/hP8HuUCR')
     )

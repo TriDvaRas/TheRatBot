@@ -6,7 +6,7 @@ const blame = require(`./functions/autoBlame`);
 const VH = require(`./functions/voiceHandler`);
 let { checkForNewScores } = require(`./functions/osu`)
 const cron = require('node-cron');
-
+const soundHandler = require(`./functions/soundHandler`)
 if (process.argv.includes(`test`)) {
 	token = process.env.RAT_DISCORD_KEY
 	prefix = `\``
@@ -47,7 +47,8 @@ for (const file of replyFiles) {
 		client.replies.set(command.aliases[i], command);
 
 }
-
+//sounds list
+soundHandler.init()
 client.login(token);
 
 
@@ -99,6 +100,7 @@ client.on('message', message => {
 				author: message.author.id
 			})
 		}
+		soundHandler.handle(message)
 		return;
 	}
 

@@ -5,7 +5,7 @@ const translatte = require('translatte');
 
 let CDs = [];
 module.exports = {
-    aliases: ['blame', `bl`, `b`],
+    aliases: ['blame', `bl`, `b`,`и`],
     description: 'Blame me!',
     help: '`blame`',
 	channelName: `spam`,

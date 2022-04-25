@@ -12,3 +12,5 @@ blameStats.json
 ratE.log
 ratO.log
 .v1
+.vscode
+.env
